@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lucas Franca — Web3 &amp; AI Agent Platform Engineer</title>
+<meta name="description" content="Senior product engineer. Governance infrastructure for Optimism, ENS and Uniswap; a managed coding-agent platform; onchain games on Arbitrum, Ronin and Blast.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='10' cy='12' r='4' fill='%235D86FF'/><circle cx='22' cy='9' r='3' fill='%23FFAB5E'/><circle cx='19' cy='22' r='5' fill='%23FF6490'/></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Instrument+Sans:wght@400;500;600&family=Spline+Sans+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.js"}}</script>
+</head>
+<body>
+
+<canvas id="scene" aria-hidden="true"></canvas>
+
+<main>
+  <section class="hero" data-formation="0" data-accent="#93a8e8">
+    <p class="eyebrow">Senior product engineer · Web3 &amp; AI agent platforms</p>
+    <h1>Lucas<br>Franca</h1>
+    <p class="lede">Twelve years shipping production software. The last four: systems where independent actors have to coordinate — DAO voters, multisig signers, autonomous coding agents, players in onchain games.</p>
+    <p class="meta">Brasília, Brazil · UTC-3 · remote, 4h+ U.S. Eastern overlap</p>
+    <nav class="links" aria-label="Profiles">
+      <a href="https://github.com/galo13eth">GitHub</a>
+      <a href="https://linkedin.com/in/lucasagfranca">LinkedIn</a>
+      <a href="mailto:lucasagfranca@gmail.com">Email</a>
+      <a href="resume/Lucas_Franca_Web3_Resume.pdf">Résumé</a>
+    </nav>
+    <p class="scroll-cue" aria-hidden="true">scroll<span>↓</span></p>
+  </section>
+
+  <section class="s-agora" data-formation="1" data-accent="#5d86ff">
+    <p class="eyebrow">2025 — now · Agora</p>
+    <h2>Governance rails for Optimism, ENS &amp; Uniswap</h2>
+    <p>Full-stack engineer on Agora's multi-tenant governance platform: proposal creation and voting, delegate discovery, grants, retro funding, attestations and rewards — the infrastructure DAOs run on.</p>
+    <ul class="work">
+      <li><strong>Safe multisig, first-class.</strong> Automatic Safe detection, live signer tracking across offchain SIWE and onchain transactions, cross-device continuity. <a href="https://www.agora.xyz/blogs/15-safe-wallet-improvements">Read the write-up</a></li>
+      <li><strong>Notifications Hub.</strong> Wallet-linked, per-event controls across email, Discord, Slack, Telegram and browser push — verification, retries, deduplication, delivery analytics. <a href="https://www.agora.xyz/blogs/9-notification-hub">Read the write-up</a></li>
+      <li><strong>Governance data.</strong> EAS-backed attestations and eligibility, indexed onchain voting data, reward distribution.</li>
+    </ul>
+  </section>
+
+  <section class="s-takeait" data-formation="2" data-accent="#ffab5e">
+    <p class="eyebrow">2025 · TakeAIt</p>
+    <h2>A ticketing platform where coding agents are users</h2>
+    <p>Built at Agora: Claude Code and Codex agents claim tickets, spin up isolated workspaces on private GCP VMs, execute, stream state, open pull requests — and pause when they need a human.</p>
+    <ul class="work">
+      <li><strong>Zero-inbound security.</strong> Poll-only runners, rotating hashed keys, per-secret IAM, per-agent Unix users, controlled egress.</li>
+      <li><strong>Crash-resilient execution.</strong> Atomic work claiming, journal/replay recovery, ticket-status reconciliation, redacted logs.</li>
+      <li><strong>Human-in-the-loop.</strong> Comment-driven pause and redirection, mention-to-wake conversations, supervision from the web UI and a Go CLI.</li>
+    </ul>
+  </section>
+
+  <section class="s-games" data-formation="3" data-accent="#ff6490">
+    <p class="eyebrow">2023 — 2025 · Onchain games</p>
+    <h2>Games that live on mainnets and stay up</h2>
+    <ul class="work">
+      <li><strong>Sekai Glory.</strong> Led full-stack delivery of a trading-card game: ~16 upgradeable contracts, real-time PvP matchmaking rebuilt around atomic match creation and Redis-persisted queue state, five languages — migrated live from Blast to Ronin.</li>
+      <li><strong>Lifeverse.</strong> DAO council member and lead engineer of Colosseum of Phanes on Arbitrum: deterministic battle simulation on a 60-second server tick, commit-reveal randomness, and the pipeline that generated the 4,686-token art collection.</li>
+      <li><strong>Realm.</strong> Fully onchain strategy ecosystem: a Solidity monorepo spanning 50+ game domains, three subgraphs serving live state, an AWS rewards engine distributing weekly ARB.</li>
+    </ul>
+  </section>
+
+  <section class="s-found" data-formation="0" data-accent="#93a8e8">
+    <p class="eyebrow">Since 2014 · Foundations</p>
+    <h2>The stack under it all</h2>
+    <p>Alongside everything: a decade at Brazil's Federal District Court of Auditors building audit systems and ChatTCDF, the Court's internal RAG chatbot. Computer Science at UFMG. Fluent Portuguese, English and Spanish.</p>
+    <dl class="stack">
+      <div><dt>Product</dt><dd>TypeScript · React · Next.js · Go · Node · Python · PostgreSQL · Redis</dd></div>
+      <div><dt>Web3</dt><dd>Solidity · Foundry · viem · wagmi · Safe · EAS · The Graph · Ponder</dd></div>
+      <div><dt>Infra</dt><dd>AWS · GCP · Docker · Terraform · WebSockets · SSE · OpenTelemetry</dd></div>
+    </dl>
+  </section>
+
+  <section class="s-contact" data-formation="0" data-accent="#66e2c0">
+    <h2 class="big">Let's build.</h2>
+    <a class="email" href="mailto:lucasagfranca@gmail.com">lucasagfranca@gmail.com</a>
+    <nav class="links" aria-label="Contact and résumés">
+      <a href="https://github.com/galo13eth">GitHub</a>
+      <a href="https://linkedin.com/in/lucasagfranca">LinkedIn</a>
+      <a href="resume/Lucas_Franca_Web3_Resume.pdf">Web3 résumé</a>
+      <a href="resume/Lucas_Franca_AI_Agent_Platforms_Resume.pdf">AI-platforms résumé</a>
+    </nav>
+    <p class="meta">Full-time remote · international contractor (PJ) · Brasília, UTC-3</p>
+    <footer>The field behind this page is one set of particles reorganizing into each chapter's shape: a constellation, a quorum ring, an execution lattice, a d20.</footer>
+  </section>
+</main>
+
+<script type="module" src="main.js"></script>
+</body>
+</html>
