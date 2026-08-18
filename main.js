@@ -34,10 +34,10 @@ function ring() {
   const a = new Float32Array(COUNT * 3);
   for (let i = 0; i < COUNT; i++) {
     const t = Math.random() * TAU;
-    const r = 5.3 + gauss() * 0.7;
+    const r = 5.2 + gauss() * 0.6;
     a[i * 3] = Math.cos(t) * r;
-    a[i * 3 + 1] = gauss() * 0.7;
-    a[i * 3 + 2] = Math.sin(t) * r;
+    a[i * 3 + 1] = Math.sin(t) * r * 0.92;
+    a[i * 3 + 2] = gauss() * 0.8;
   }
   return a;
 }
