@@ -21,8 +21,9 @@ ES module; `file://` won't work.)
 
 ## Deploy
 
-Push to GitHub and enable Pages (deploy from branch, root). Nothing else to
-configure.
+Live at https://lucasfranca-portfolio-production.up.railway.app — a Railway
+service connected to this repo. Every push to `main` auto-deploys. No config
+files needed; Railway serves the static files as-is.
 
 ## Files
 
