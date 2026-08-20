@@ -21,8 +21,7 @@ ES module; `file://` won't work.)
 
 ## Deploy
 
-Live at https://lucasfranca-portfolio-production.up.railway.app — a Railway
-service connected to this repo. Every push to `main` auto-deploys. No config
+Live at https://lucasfranca.dev — a Railway service connected to this repo. Every push to `main` auto-deploys. No config
 files needed; Railway serves the static files as-is.
 
 ## Files
