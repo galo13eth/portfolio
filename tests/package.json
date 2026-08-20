@@ -1,10 +1,10 @@
 {
-  "name": "portfolio-dev",
+  "name": "portfolio-tests",
   "private": true,
   "type": "module",
   "scripts": {
-    "validate": "html-validate index.html",
-    "links": "linkinator ./ --recurse --skip \"^https?://(?!localhost)\"",
+    "validate": "html-validate ../index.html",
+    "links": "linkinator ../ --recurse --skip \"^https?://(?!localhost)\"",
     "test": "playwright test"
   },
   "devDependencies": {

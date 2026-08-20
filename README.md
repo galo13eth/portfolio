@@ -24,11 +24,15 @@ ES module; `file://` won't work.)
 ## Validate
 
 ```sh
+cd tests
 npm install
 npm run validate   # html-validate on index.html
 npm run links      # internal link/asset check
 npm test           # Playwright smoke: desktop + mobile, axe accessibility scan
 ```
+
+(Tooling lives in `tests/` so the repo root stays a plain static site —
+Railway's static deploy breaks if a `package.json` sits at the root.)
 
 The same three checks run in CI on every push.
 

@@ -1,9 +1,9 @@
 import { defineConfig, devices } from '@playwright/test';
 
 export default defineConfig({
-  testDir: './tests',
+  testDir: '.',
   webServer: {
-    command: 'python3 -m http.server 8123',
+    command: 'python3 -m http.server 8123 --directory ..',
     port: 8123,
     reuseExistingServer: true,
   },
