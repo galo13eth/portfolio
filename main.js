@@ -16,7 +16,8 @@ camera.position.set(0, 2.2, 17);
 
 const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const TAU = Math.PI * 2;
-const COUNT = 16 * 13 * 12; // fills the lattice formation exactly
+const DIMS = innerWidth > 880 ? [16, 13, 12] : [11, 10, 9]; // lattice grid; COUNT derives from it so the lattice always fills exactly
+const COUNT = DIMS[0] * DIMS[1] * DIMS[2];
 
 const gauss = () => (Math.random() + Math.random() + Math.random() - 1.5);
 
@@ -44,7 +45,7 @@ function ring() {
 
 function lattice() {
   const a = new Float32Array(COUNT * 3);
-  const [nx, ny, nz, s] = [16, 13, 12, 0.55];
+  const [nx, ny, nz] = DIMS, s = 0.55;
   let i = 0;
   for (let x = 0; x < nx; x++)
     for (let y = 0; y < ny; y++)
@@ -200,6 +201,7 @@ function resize() {
 }
 addEventListener('resize', resize);
 document.fonts?.ready.then(measure);
+document.querySelectorAll('details').forEach(d => d.addEventListener('toggle', measure));
 resize();
 
 const mouse = { x: 0, y: 0 };
@@ -209,7 +211,7 @@ if (!reduced) addEventListener('pointermove', e => {
 });
 
 const clock = new THREE.Clock();
-renderer.setAnimationLoop(() => {
+function frame() {
   const el = clock.getElapsedTime();
   const globalT = updateScroll();
   if (!reduced) material.uniforms.uTime.value = el;
@@ -218,4 +220,23 @@ renderer.setAnimationLoop(() => {
   camera.position.y += (2.2 - mouse.y * 1.1 - camera.position.y) * 0.04;
   camera.lookAt(0, 0, 0);
   renderer.render(scene, camera);
-});
+}
+
+if (reduced) {
+  // no continuous loop: single frames on scroll/resize keep formations scroll-driven
+  let queued = false;
+  const renderOnce = () => {
+    if (queued) return;
+    queued = true;
+    requestAnimationFrame(() => { queued = false; frame(); });
+  };
+  addEventListener('scroll', renderOnce, { passive: true });
+  addEventListener('resize', renderOnce);
+  document.fonts?.ready.then(renderOnce);
+  frame();
+} else {
+  renderer.setAnimationLoop(frame);
+  document.addEventListener('visibilitychange', () => {
+    renderer.setAnimationLoop(document.hidden ? null : frame);
+  });
+}

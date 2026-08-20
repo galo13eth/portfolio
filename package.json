@@ -1,0 +1,16 @@
+{
+  "name": "portfolio-dev",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "validate": "html-validate index.html",
+    "links": "linkinator ./ --recurse --skip \"^https?://(?!localhost)\"",
+    "test": "playwright test"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "^4.10.2",
+    "@playwright/test": "^1.55.0",
+    "html-validate": "^9.7.1",
+    "linkinator": "^6.1.2"
+  }
+}

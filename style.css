@@ -130,6 +130,54 @@ a:hover { color: var(--a); }
 .work strong { color: var(--ink); font-weight: 600; }
 .work a { font-size: 0.92rem; white-space: nowrap; }
 
+.pr-meta {
+  display: block;
+  margin-top: 0.4rem;
+  font: 400 0.75rem/1.6 var(--mono);
+  letter-spacing: 0.02em;
+}
+.pr-meta a { font-weight: 500; }
+
+.work code {
+  font: 400 0.88em var(--mono);
+  color: var(--ink);
+}
+
+.role {
+  display: inline-block;
+  margin: 0 0.35rem;
+  font: 400 0.72rem/1 var(--mono);
+  letter-spacing: 0.06em;
+  color: var(--a);
+  white-space: nowrap;
+}
+
+.case {
+  margin-top: 1.8rem;
+  border-left: 1px solid color-mix(in srgb, var(--a) 45%, transparent);
+  padding-left: 1.2rem;
+}
+.case summary {
+  cursor: pointer;
+  font: 500 0.8rem/1 var(--mono);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--a);
+  list-style: none;
+}
+.case summary::before { content: "+ "; }
+.case[open] summary::before { content: "− "; }
+.case summary::-webkit-details-marker { display: none; }
+.case > div { margin-top: 1.2rem; display: grid; gap: 0.5rem; }
+.case h3 {
+  font: 500 0.72rem/1 var(--mono);
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--ink);
+  margin-top: 0.6rem;
+}
+.case p { font-size: 0.95rem; }
+
 .stack { margin-top: 1.8rem; display: grid; gap: 0.9rem; }
 .stack div { display: grid; grid-template-columns: 6rem 1fr; gap: 1rem; align-items: baseline; }
 .stack dt {
