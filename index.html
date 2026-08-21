@@ -35,177 +35,279 @@
 </head>
 <body>
 
+<a class="skip-link" href="#main-content">Skip to content</a>
 <canvas id="scene" aria-hidden="true"></canvas>
 
-<main>
-  <section class="hero" data-formation="0" data-accent="#93a8e8">
-    <p class="eyebrow">Senior Web3 Product Engineer</p>
-    <h1>Lucas<br>Franca</h1>
-    <p class="lede">Smart contracts, indexers, backend services, and wallet-connected products — shipped as one production system. 12+ years in software, 4+ shipping Web3. Also building secure AI-agent platforms and developer infrastructure.</p>
-    <p class="meta">Brasília, Brazil · UTC-3 · full-time remote, 4h+ U.S. Eastern overlap</p>
-    <nav class="links" aria-label="Profiles">
-      <a href="https://github.com/galo13eth">GitHub</a>
-      <a href="https://linkedin.com/in/lucasagfranca">LinkedIn</a>
-      <a href="mailto:lucasagfranca@gmail.com">Email</a>
+<header class="site-header">
+  <nav class="utility shell" aria-label="Primary navigation">
+    <a class="brand" href="#top" aria-label="Lucas Franca, back to top">LF/</a>
+    <div class="nav-links">
+      <a href="#flagship">Work</a>
+      <a class="desktop-nav" href="#public-code">Public code</a>
+      <a class="desktop-nav" href="#ai-systems">AI systems</a>
       <a href="resume/Lucas_Franca_Web3_Resume.pdf">Résumé</a>
-    </nav>
-    <p class="scroll-cue" aria-hidden="true">scroll<span>↓</span></p>
-  </section>
+      <a href="mailto:lucasagfranca@gmail.com">Email</a>
+    </div>
+    <p class="nav-availability"><span aria-hidden="true"></span>Available · UTC−3</p>
+  </nav>
+</header>
 
-  <section class="s-code" data-formation="0" data-accent="#93a8e8">
-    <p class="eyebrow">Public code · 90 merged PRs</p>
-    <h2>Selected public engineering</h2>
-    <p>Original systems and merged production work — every link opens the code, review, or live result.</p>
-    <ul class="work prs">
-      <li>
-        <strong>Snapshot-and-claim migration across EVM chains.</strong>
-        Built a deterministic Rust snapshot pipeline, narrowly scoped Solidity claim contracts, and a React verification app for ERC-721/1155 state migration — with explicit trust assumptions and a public Sepolia → Base Sepolia canary.
-        <span class="pr-meta">Rust · Solidity · Foundry · React · Merkle proofs · <a href="https://github.com/galo13eth/evm-migration-lab">Repository</a> · <a href="https://web-production-fab71.up.railway.app">Live app</a> · <a href="https://github.com/galo13eth/evm-migration-lab/releases/tag/v0.1.0">v0.1.0</a></span>
-      </li>
-      <li>
-        <strong>Embedded wallets without breaking existing Web3 flows.</strong>
-        One tenant needed email and social login with embedded wallets; every other tenant relied on ConnectKit, Safe, and gasless EIP-712 voting. Shipped Privy as a wagmi connector behind a per-tenant flag — no existing wallet flow changed.
-        <span class="pr-meta">wagmi · Privy · SIWE · EIP-712 · <a href="https://github.com/voteagora/agora-next/pull/1567">Merged · agora-next#1567</a></span>
-      </li>
-      <li>
-        <strong>Authorization owned by the server.</strong>
-        Forum actions trusted per-action client signatures and client-supplied flags. Migrated them to reusable SIWE JWT auth, moved attachment ownership and RBAC checks server-side, and gated the admin APIs.
-        <span class="pr-meta">SIWE · JWT · RBAC · <a href="https://github.com/voteagora/agora-next/pull/1437">Merged · agora-next#1437</a></span>
-      </li>
-      <li>
-        <strong>Sybil resistance for Optimism citizenship.</strong>
-        Citizenship registration needed one-person-one-vote confidence. Built multi-factor trust scoring — Human Passport tiers, OpenRank social trust — with a guided registration wizard and atomic seasonal registration with audit records.
-        <span class="pr-meta">EAS · Human Passport · OpenRank · <a href="https://github.com/voteagora/op-atlas/pull/1465">Merged · op-atlas#1465</a></span>
-      </li>
-      <li>
-        <strong>Sponsored delegations that failed onchain.</strong>
-        Relayed <code>delegateBySig</code> transactions reverted out of gas while the UI reported success. Diagnosed from production traces — gas limits sat at ~99% of actual usage — then added estimate-based gas buffers and receipt-verified completion.
-        <span class="pr-meta">EIP-712 · gas relays · tracing · <a href="https://github.com/voteagora/agora-next/pull/1514">Merged · agora-next#1514</a></span>
-      </li>
-      <li>
-        <strong>Publishing that survives restarts.</strong>
-        Contract publishing hit PostgreSQL bind limits and died mid-run. Rebuilt it around batched writes, persisted progress, and idempotent resumption, with live progress in the UI.
-        <span class="pr-meta">PostgreSQL · batching · idempotency · <a href="https://github.com/voteagora/op-atlas/pull/1441">Merged · op-atlas#1441</a></span>
-      </li>
-      <li>
-        <strong>Open-source Go — under review.</strong>
-        Authenticating incoming Telegram webhooks with registered secrets and constant-time comparison, with a backward-compatible rollout.
-        <span class="pr-meta">Go · webhook security · <a href="https://github.com/superplanehq/superplane/pull/6702">Under review · superplane#6702</a></span>
-      </li>
-    </ul>
-  </section>
-
-  <section class="s-agora" data-formation="1" data-accent="#5d86ff">
-    <p class="eyebrow">2025 — now · Agora · full-time</p>
-    <h2>Governance rails for Optimism, ENS &amp; Uniswap</h2>
-    <p>Full-stack engineer on Agora's multi-tenant governance platform: proposal creation and voting, delegate discovery, grants, retro funding, attestations and rewards — the infrastructure DAOs run on.</p>
-    <ul class="work">
-      <li><strong>Safe multisig, first-class.</strong> Automatic Safe detection, live signer tracking across offchain SIWE and onchain transactions, cross-device continuity. <a href="https://www.agora.xyz/blogs/15-safe-wallet-improvements">Read the write-up</a></li>
-      <li><strong>Notifications Hub.</strong> Wallet-linked, per-event controls across email, Discord, Slack, Telegram and browser push — verification, retries, deduplication, delivery analytics. <a href="https://www.agora.xyz/blogs/9-notification-hub">Read the write-up</a></li>
-      <li><strong>Governance data.</strong> EAS-backed attestations and eligibility, indexed onchain voting data, reward distribution.</li>
-    </ul>
-    <details class="case">
-      <summary>Read the case study</summary>
-      <div>
-        <h3>Problem</h3>
-        <p>Optimism, ENS, and Uniswap needed one governance platform covering proposals, voting, delegation, grants, and identity — for very different DAOs, with wallet UX spanning EOAs, Safe multisigs, and users who have never held a wallet.</p>
-        <h3>Ownership</h3>
-        <p>Architecture and end-to-end delivery of multi-tenant governance features: Safe-native signing, the Notifications Hub, authentication, attestation-backed eligibility, and citizenship registration.</p>
-        <h3>Constraints</h3>
-        <p>One codebase serving all tenants behind per-tenant flags; live DAOs that cannot break mid-vote; every change backward-compatible; security stakes measured in treasuries.</p>
-        <h3>Architecture</h3>
-        <p>A multi-tenant Next.js application over indexed onchain governance data; reusable SIWE JWT authentication; Safe-aware signing flows with live signer tracking; a five-channel notification platform with verification, retries, and deduplication.</p>
-        <h3>Hard decisions</h3>
-        <p>Replacing per-action client signatures with server-owned SIWE JWT authorization; introducing embedded wallets without touching the relayer paths existing tenants depend on; sizing relay gas from estimates instead of fixed limits after tracing out-of-gas reverts in production.</p>
-        <h3>Outcome</h3>
-        <p>Shipped across a dozen-plus tenant DAOs. 90 merged PRs in the public repositories; two public product write-ups.</p>
-        <p class="pr-meta">Evidence: <a href="https://github.com/voteagora/agora-next/pull/1437">#1437</a> · <a href="https://github.com/voteagora/agora-next/pull/1567">#1567</a> · <a href="https://github.com/voteagora/agora-next/pull/1514">#1514</a> · <a href="https://www.agora.xyz/blogs/15-safe-wallet-improvements">Safe write-up</a> · <a href="https://www.agora.xyz/blogs/9-notification-hub">Notifications write-up</a></p>
+<main id="main-content">
+  <section id="top" class="hero" data-formation="0" data-accent="#93a8e8">
+    <div class="hero-grid shell">
+      <div class="hero-copy">
+        <p class="availability"><span aria-hidden="true"></span>Available · remote · UTC−3</p>
+        <p class="eyebrow">Senior Web3 Product Engineer</p>
+        <h1><span>Lucas</span><span>Franca</span></h1>
+        <p class="lede">Smart contracts, indexers, backend services, and wallet-connected products — shipped as one production system.</p>
+        <p class="hero-stack">Solidity · Rust · Go · TypeScript · React</p>
+        <div class="hero-actions">
+          <a class="button primary" href="#flagship">View flagship <span aria-hidden="true">↓</span></a>
+          <a class="button secondary" href="resume/Lucas_Franca_Web3_Resume.pdf">Résumé</a>
+          <a class="text-action" href="mailto:lucasagfranca@gmail.com">Email me</a>
+        </div>
+        <p class="meta">Brasília, Brazil · full-time remote · 4h+ U.S. Eastern overlap</p>
       </div>
-    </details>
+
+      <article class="hero-feature surface" aria-labelledby="hero-feature-title">
+        <div class="feature-topline">
+          <p class="card-label">Public flagship · v0.1.0</p>
+          <p class="status-badge" data-status-state role="status" aria-live="polite">Checking public artifact</p>
+        </div>
+        <h2 id="hero-feature-title">EVM Migration Lab</h2>
+        <p>A deterministic Rust snapshot pipeline, typed Solidity claims, and a React verifier for moving ERC-721/1155 state without pretending it is a trustless bridge.</p>
+        <dl class="status-grid">
+          <div><dt>Claims / manifest</dt><dd data-status-claims>—</dd></div>
+          <div><dt>Snapshot block</dt><dd data-status-block>—</dd></div>
+          <div><dt>Reconciliation</dt><dd data-status-reconciliation>—</dd></div>
+          <div><dt>Verified commit</dt><dd data-status-commit>—</dd></div>
+          <div class="status-root"><dt>Merkle root</dt><dd data-status-root>—</dd></div>
+        </dl>
+        <div class="feature-links">
+          <a href="https://github.com/galo13eth/evm-migration-lab">Repository</a>
+          <a href="https://web-production-fab71.up.railway.app">Live verification</a>
+        </div>
+      </article>
+
+      <dl class="proof-strip">
+        <div><dt>12+</dt><dd>years shipping software</dd></div>
+        <div><dt>90+</dt><dd>merged public Agora PRs</dd></div>
+        <div><dt>16</dt><dd>upgradeable contracts in one game</dd></div>
+        <div><dt>176</dt><dd>contracts live on Arbitrum One</dd></div>
+      </dl>
+    </div>
   </section>
 
-  <section class="s-takeait" data-formation="2" data-accent="#ffab5e">
-    <p class="eyebrow">2025 · TakeAIt</p>
-    <h2>A ticketing platform where coding agents are users</h2>
-    <p>Built at Agora: Claude Code and Codex agents claim tickets, spin up isolated workspaces on private GCP VMs, execute, stream state, open pull requests — and pause when they need a human.</p>
-    <ul class="work">
-      <li><strong>Zero-inbound security.</strong> Poll-only runners, rotating hashed keys, per-secret IAM, per-agent Unix users, controlled egress.</li>
-      <li><strong>Crash-resilient execution.</strong> Atomic work claiming, journal/replay recovery, ticket-status reconciliation, redacted logs.</li>
-      <li><strong>Human-in-the-loop.</strong> Comment-driven pause and redirection, mention-to-wake conversations, supervision from the web UI and a Go CLI.</li>
-    </ul>
-    <details class="case">
-      <summary>Read the case study</summary>
-      <div>
-        <h3>Problem</h3>
-        <p>Coding agents are productive but ungoverned: pointed at production repositories they need isolation, auditability, and human control — or they are a liability instead of leverage.</p>
-        <h3>Ownership</h3>
-        <p>The platform end to end: Next.js/PostgreSQL control plane, GCP provisioning layer, and the multi-daemon Go runner runtime.</p>
-        <h3>Constraints</h3>
-        <p>No inbound network path to runners; secrets never at rest on execution hosts; agents crash mid-run and must recover without duplicating work; humans must be able to redirect a run in flight.</p>
-        <h3>Architecture</h3>
-        <p>Poll-only Go runners with rotating hashed keys and per-agent Unix users; credentials in GCP Secret Manager with per-secret IAM and temporary materialization; atomic verb-based work claiming; a journal/replay model for crash recovery; SSE state streaming and automated pull-request creation.</p>
-        <h3>Hard decisions</h3>
-        <p>Zero-inbound polling over push (larger latency budget, radically smaller attack surface); verb-based atomic claiming so concurrent agents never double-claim; journaled replay over stateless retries so partial work survives a crash.</p>
-        <h3>Outcome</h3>
-        <p>Claude Code and Codex agents ship reviewed pull requests daily on Agora's internal engineering — and the same workflow is how I build my own software.</p>
-        <p class="pr-meta">Private code — architecture detailed in the <a href="resume/Lucas_Franca_AI_Agent_Platforms_Resume.pdf">AI-platforms résumé</a></p>
+  <section class="content-section flagship" data-formation="0" data-accent="#93a8e8">
+    <div class="shell">
+      <header id="flagship" class="section-heading">
+        <p class="eyebrow">Original public engineering</p>
+        <h2>One migration, inspectable end to end.</h2>
+        <p>Built from lessons learned moving a live game from Blast to Ronin: freeze a reviewed source snapshot, publish deterministic evidence, and make every destination claim independently verifiable.</p>
+      </header>
+      <div class="flagship-layout">
+        <figure class="product-shot surface">
+          <img src="assets/evm-migration-lab-claim-app.png" alt="EVM Migration Lab reconciliation view showing four of four Base Sepolia claims and verified campaign integrity" width="1280" height="1970">
+          <figcaption>Fail-closed verification UI reading the released Base Sepolia campaign and static proof bundle.</figcaption>
+        </figure>
+        <div class="flagship-copy surface">
+          <p class="release-label"><span aria-hidden="true"></span>Verified Sepolia → Base Sepolia reference deployment</p>
+          <ul class="proof-list">
+            <li><span>01</span><div><strong>Deterministic snapshot</strong><p>Resumable Rust backfill, canonical state reconstruction, Merkle proofs, and artifact digests.</p></div></li>
+            <li><span>02</span><div><strong>Narrow claim authority</strong><p>Separate ERC-721 and ERC-1155 campaigns with immutable domains and frozen roots.</p></div></li>
+            <li><span>03</span><div><strong>Smart-wallet recovery</strong><p>Source-owner authorization maps contract wallets to a valid destination authority.</p></div></li>
+            <li><span>04</span><div><strong>Fail-closed verification</strong><p>The app disables claims when artifacts, proofs, campaign state, or token authority disagree.</p></div></li>
+            <li><span>05</span><div><strong>Public canary</strong><p>Verified contracts, 2-of-3 Safe administration, direct, batch, EOA, and ERC-1271 claims.</p></div></li>
+          </ul>
+          <div class="project-actions">
+            <a class="button primary" href="https://web-production-fab71.up.railway.app">Open live app</a>
+            <a class="button secondary" href="https://github.com/galo13eth/evm-migration-lab">Read the code</a>
+            <a class="text-action" href="https://github.com/galo13eth/evm-migration-lab/blob/v0.1.0/docs/canary-sepolia-base-sepolia.md">Canary evidence</a>
+          </div>
+        </div>
       </div>
-    </details>
+    </div>
   </section>
 
-  <section class="s-games" data-formation="3" data-accent="#ff6490">
-    <p class="eyebrow">2023 — present · Onchain games</p>
-    <h2>Games that live on mainnets and stay up</h2>
-    <ul class="work">
-      <li><strong>Sekai Glory</strong> <span class="role">2024–2025 · part-time lead</span> Led full-stack delivery of a trading-card game: 16 upgradeable contracts, real-time PvP matchmaking rebuilt around atomic match creation and Redis-persisted queue state, five languages — migrated live from Blast to Ronin.</li>
-      <li><strong>Lifeverse</strong> <span class="role">2023–present · fractional, DAO council</span> DAO council member and lead engineer of Colosseum of Phanes on Arbitrum: deterministic battle simulation on a 60-second server tick, commit-reveal randomness, and the pipeline that generated the 4,686-token art collection.</li>
-      <li><strong>Realm</strong> <span class="role">2023–2024 · part-time</span> Fully onchain strategy ecosystem: a Solidity monorepo spanning 55 game domains with 176 contracts live on Arbitrum One, three subgraphs serving live state, an AWS rewards engine distributing weekly ARB.</li>
-    </ul>
-    <details class="case">
-      <summary>Read the case study</summary>
-      <div>
-        <h3>Problem</h3>
-        <p>Onchain games fail in ways web apps don't: chains get abandoned mid-product, NFT state is too slow for real-time gameplay, and randomness with money attached invites manipulation.</p>
-        <h3>Ownership</h3>
-        <p>Led full-stack delivery at Sekai Glory; DAO council and lead engineering at Lifeverse; full-stack and contracts at Realm — application, contracts, indexers, and infrastructure in each.</p>
-        <h3>Constraints</h3>
-        <p>Live players during the Blast-to-Ronin migration; matchmaking that cannot strand a queue; provable fairness for reveals and rewards; small teams owning everything.</p>
-        <h3>Architecture</h3>
-        <p>Hybrid state: NFTs mirrored into PostgreSQL for low-latency simulation with idempotent, recoverable mint and upgrade flows. 16 UUPS-upgradeable contracts with 20 Forge test suites (Sekai). Deterministic battle simulation with commit-reveal randomness (Lifeverse). A 55-domain Solidity monorepo with three subgraphs indexing 116 contracts (Realm).</p>
-        <h3>Hard decisions</h3>
-        <p>Mirroring chain state instead of reading it live — accepting reconciliation complexity to get game-grade latency; rebuilding matchmaking around atomic match creation and Redis-persisted XState after stuck-queue failures; migrating contracts, indexer, and app to Ronin without rebuilding the product.</p>
-        <h3>Outcome</h3>
-        <p>176 contracts live on Arbitrum One; the Sekai migration shipped with the game still running; the stuck-queue failure mode was eliminated rather than mitigated.</p>
-        <p class="pr-meta">Private code — detailed in the <a href="resume/Lucas_Franca_Web3_Resume.pdf">Web3 résumé</a></p>
+  <section class="content-section s-code" data-formation="0" data-accent="#93a8e8">
+    <div class="shell">
+      <header id="public-code" class="section-heading">
+        <p class="eyebrow">Public code · production decisions</p>
+        <h2>Problems solved in the open.</h2>
+        <p>Six focused stories from shipped systems. Every evidence link opens the code or review.</p>
+      </header>
+      <ul class="pr-grid">
+        <li class="work-card surface">
+          <p class="card-label">Wallet architecture</p><h3>Embedded wallets without breaking Web3 flows.</h3>
+          <p><span>Problem</span> One tenant needed email and social login while every other tenant relied on ConnectKit, Safe, and gasless EIP-712 voting.</p>
+          <p><span>Decision</span> Introduce Privy as a wagmi connector behind a per-tenant flag.</p>
+          <p><span>Outcome</span> A new onboarding path with no regression to existing wallet and relayer flows.</p>
+          <p class="pr-meta">wagmi · Privy · SIWE · EIP-712</p><a class="evidence-link" href="https://github.com/voteagora/agora-next/pull/1567">Merged · agora-next#1567 <span aria-hidden="true">↗</span></a>
+        </li>
+        <li class="work-card surface">
+          <p class="card-label">Authorization</p><h3>Authorization owned by the server.</h3>
+          <p><span>Problem</span> Forum actions trusted per-action client signatures and client-supplied authorization flags.</p>
+          <p><span>Decision</span> Reuse SIWE JWT auth and move ownership plus RBAC checks server-side.</p>
+          <p><span>Outcome</span> Smaller clients and gated administrative APIs with one authorization boundary.</p>
+          <p class="pr-meta">SIWE · JWT · RBAC</p><a class="evidence-link" href="https://github.com/voteagora/agora-next/pull/1437">Merged · agora-next#1437 <span aria-hidden="true">↗</span></a>
+        </li>
+        <li class="work-card surface">
+          <p class="card-label">Identity</p><h3>Sybil resistance for Optimism citizenship.</h3>
+          <p><span>Problem</span> Citizenship registration needed confidence in one-person-one-vote eligibility.</p>
+          <p><span>Decision</span> Combine Human Passport tiers, OpenRank trust, and atomic seasonal registration.</p>
+          <p><span>Outcome</span> A guided multi-factor eligibility flow with durable audit records.</p>
+          <p class="pr-meta">EAS · Human Passport · OpenRank</p><a class="evidence-link" href="https://github.com/voteagora/op-atlas/pull/1465">Merged · op-atlas#1465 <span aria-hidden="true">↗</span></a>
+        </li>
+        <li class="work-card surface">
+          <p class="card-label">Production debugging</p><h3>Sponsored delegations that failed onchain.</h3>
+          <p><span>Problem</span> Relayed <code>delegateBySig</code> transactions submitted successfully but reverted out of gas.</p>
+          <p><span>Decision</span> Trace real receipts, replace fixed limits with estimate-based buffers, and verify completion.</p>
+          <p><span>Outcome</span> The UI reports success only after the sponsored transaction actually succeeds.</p>
+          <p class="pr-meta">EIP-712 · gas relays · tracing</p><a class="evidence-link" href="https://github.com/voteagora/agora-next/pull/1514">Merged · agora-next#1514 <span aria-hidden="true">↗</span></a>
+        </li>
+        <li class="work-card surface">
+          <p class="card-label">Recovery</p><h3>Publishing that survives restarts.</h3>
+          <p><span>Problem</span> Contract publication hit PostgreSQL bind limits and died midway through long runs.</p>
+          <p><span>Decision</span> Batch writes, persist progress, and make every step idempotently resumable.</p>
+          <p><span>Outcome</span> Interrupted runs recover instead of starting over, with live progress in the UI.</p>
+          <p class="pr-meta">PostgreSQL · batching · idempotency</p><a class="evidence-link" href="https://github.com/voteagora/op-atlas/pull/1441">Merged · op-atlas#1441 <span aria-hidden="true">↗</span></a>
+        </li>
+        <li class="work-card surface">
+          <p class="card-label">Go security · upstream</p><h3>Authenticate incoming Telegram webhooks.</h3>
+          <p><span>Problem</span> Incoming webhook updates lacked sender authentication.</p>
+          <p><span>Decision</span> Validate registered secrets with constant-time comparison and a compatible rollout.</p>
+          <p><span>Outcome</span> A narrowly scoped security patch submitted to the upstream Go project.</p>
+          <p class="pr-meta">Go · webhook security</p><a class="evidence-link" href="https://github.com/superplanehq/superplane/pull/6702">Under review · superplane#6702 <span aria-hidden="true">↗</span></a>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="governance" class="content-section s-agora" data-formation="1" data-accent="#5d86ff">
+    <div class="shell">
+      <header class="section-heading">
+        <p class="eyebrow">2025 — now · Agora · full-time</p>
+        <h2>Governance rails for Optimism, ENS &amp; Uniswap.</h2>
+        <p>Full-stack engineering across proposals, voting, delegate discovery, grants, attestations, rewards, and wallet UX for the infrastructure DAOs run on.</p>
+      </header>
+      <div class="chapter-grid">
+        <div class="chapter-copy">
+          <ul class="chapter-highlights">
+            <li><strong>Safe multisig, first-class.</strong><p>Automatic Safe detection and live signer tracking across offchain SIWE and onchain transactions.</p><a href="https://www.agora.xyz/blogs/15-safe-wallet-improvements">Read the write-up</a></li>
+            <li><strong>Notifications Hub.</strong><p>Wallet-linked controls across email, Discord, Slack, Telegram, and browser push.</p><a href="https://www.agora.xyz/blogs/9-notification-hub">Read the write-up</a></li>
+            <li><strong>Governance data.</strong><p>EAS-backed eligibility, indexed onchain voting data, and reward distribution.</p></li>
+          </ul>
+          <details class="case surface">
+            <summary>Read the case study</summary>
+            <div>
+              <h3>Problem</h3><p>Optimism, ENS, and Uniswap needed one governance platform covering proposals, voting, delegation, grants, and identity — for different DAOs, with wallet UX spanning EOAs, Safe multisigs, and users who have never held a wallet.</p>
+              <h3>Ownership</h3><p>Architecture and end-to-end delivery of multi-tenant governance features: Safe-native signing, the Notifications Hub, authentication, attestation-backed eligibility, and citizenship registration.</p>
+              <h3>Constraints</h3><p>One codebase serving all tenants behind per-tenant flags; live DAOs that cannot break mid-vote; every change backward-compatible; security stakes measured in treasuries.</p>
+              <h3>Architecture</h3><p>A multi-tenant Next.js application over indexed onchain governance data; reusable SIWE JWT authentication; Safe-aware signing flows with live signer tracking; a five-channel notification platform with verification, retries, and deduplication.</p>
+              <h3>Hard decisions</h3><p>Replacing per-action client signatures with server-owned SIWE JWT authorization; introducing embedded wallets without touching existing relayer paths; sizing relay gas from estimates after tracing production reverts.</p>
+              <h3>Outcome</h3><p>Shipped across a dozen-plus tenant DAOs. 90+ merged PRs in the public repositories and two public product write-ups.</p>
+              <p class="pr-meta">Evidence: <a href="https://github.com/voteagora/agora-next/pull/1437">#1437</a> · <a href="https://github.com/voteagora/agora-next/pull/1567">#1567</a> · <a href="https://github.com/voteagora/agora-next/pull/1514">#1514</a></p>
+            </div>
+          </details>
+        </div>
+        <figure class="system-diagram surface" role="img" aria-labelledby="governance-diagram-title governance-diagram-caption">
+          <p class="card-label">Wallet-aware governance flow</p><h3 id="governance-diagram-title">Different accounts, one product boundary.</h3>
+          <div class="diagram-inputs"><span>EOA</span><span>Safe</span><span>Embedded wallet</span></div>
+          <span class="diagram-arrow" aria-hidden="true">↓</span><div class="diagram-node accent-node">Wallet-aware product layer</div>
+          <span class="diagram-arrow" aria-hidden="true">↓</span><div class="diagram-split"><span>SIWE authorization</span><span>EIP-712 signing</span></div>
+          <span class="diagram-arrow" aria-hidden="true">↓</span><div class="diagram-split"><span>Indexed governance</span><span>Onchain execution</span></div>
+          <figcaption id="governance-diagram-caption">Account-specific UX converges on server-owned authorization and receipt-verified execution.</figcaption>
+        </figure>
       </div>
-    </details>
+    </div>
   </section>
 
-  <section class="s-found" data-formation="0" data-accent="#93a8e8">
-    <p class="eyebrow">Since 2014 · Foundations</p>
-    <h2>The stack under it all</h2>
-    <p>Alongside everything, long-term part-time: a decade at Brazil's Federal District Court of Auditors building audit systems and ChatTCDF, the Court's internal RAG chatbot. Computer Science at UFMG. Fluent Portuguese, English and Spanish.</p>
-    <dl class="stack">
-      <div><dt>Product</dt><dd>TypeScript · React · Next.js · Go · Node · Python · PostgreSQL · Redis</dd></div>
-      <div><dt>Web3</dt><dd>Solidity · Foundry · viem · wagmi · Safe · EAS · The Graph · Ponder</dd></div>
-      <div><dt>Infra</dt><dd>AWS · GCP · Docker · Terraform · WebSockets · SSE · OpenTelemetry</dd></div>
-    </dl>
+  <section class="content-section s-takeait" data-formation="2" data-accent="#ffab5e">
+    <div class="shell">
+      <header id="ai-systems" class="section-heading">
+        <p class="eyebrow">2025 · TakeAIt</p><h2>A ticketing platform where coding agents are users.</h2>
+        <p>Claude Code and Codex agents claim tickets, spin up isolated workspaces on private GCP VMs, execute, stream state, open pull requests — and pause when they need a human.</p>
+      </header>
+      <div class="chapter-grid chapter-grid-reverse">
+        <figure class="system-diagram surface" role="img" aria-labelledby="takeait-diagram-title takeait-diagram-caption">
+          <p class="card-label">Durable agent execution</p><h3 id="takeait-diagram-title">Control plane outside. Runners sealed inside.</h3>
+          <div class="diagram-split"><span>Human supervision</span><span>Ticket queue</span></div>
+          <span class="diagram-arrow" aria-hidden="true">↓</span><div class="diagram-node accent-node">Next.js + PostgreSQL control plane</div>
+          <span class="diagram-arrow" aria-hidden="true">↓ poll only</span><div class="diagram-node">Isolated Go runner · private GCP VM</div>
+          <span class="diagram-arrow" aria-hidden="true">↓</span><div class="diagram-split"><span>Journal + replay</span><span>Reviewed pull request</span></div>
+          <figcaption id="takeait-diagram-caption">No inbound runner path; durable state and human comments govern execution.</figcaption>
+        </figure>
+        <div class="chapter-copy">
+          <ul class="chapter-highlights">
+            <li><strong>Zero-inbound security.</strong><p>Poll-only runners, rotating hashed keys, per-secret IAM, per-agent Unix users, and controlled egress.</p></li>
+            <li><strong>Crash-resilient execution.</strong><p>Atomic work claiming, journal/replay recovery, ticket reconciliation, and redacted logs.</p></li>
+            <li><strong>Human-in-the-loop.</strong><p>Comment-driven pause and redirection, mention-to-wake conversations, and supervision from web and CLI.</p></li>
+          </ul>
+          <details class="case surface">
+            <summary>Read the case study</summary>
+            <div>
+              <h3>Problem</h3><p>Coding agents are productive but ungoverned: pointed at production repositories they need isolation, auditability, and human control — or they are a liability instead of leverage.</p>
+              <h3>Ownership</h3><p>The platform end to end: Next.js/PostgreSQL control plane, GCP provisioning layer, and the multi-daemon Go runner runtime.</p>
+              <h3>Constraints</h3><p>No inbound network path to runners; secrets never at rest on execution hosts; agents crash mid-run and must recover without duplicating work; humans must be able to redirect a run in flight.</p>
+              <h3>Architecture</h3><p>Poll-only Go runners with rotating hashed keys and per-agent Unix users; credentials in GCP Secret Manager with per-secret IAM and temporary materialization; atomic verb-based work claiming; journal/replay recovery; SSE state streaming and automated pull-request creation.</p>
+              <h3>Hard decisions</h3><p>Zero-inbound polling over push; verb-based atomic claiming so concurrent agents never double-claim; journaled replay over stateless retries so partial work survives a crash.</p>
+              <h3>Outcome</h3><p>Claude Code and Codex agents ship reviewed pull requests daily on Agora's internal engineering — and the same workflow is how I build my own software.</p>
+              <p class="pr-meta">Private code — architecture detailed in the <a href="resume/Lucas_Franca_AI_Agent_Platforms_Resume.pdf">AI-platforms résumé</a></p>
+            </div>
+          </details>
+        </div>
+      </div>
+    </div>
   </section>
 
-  <section class="s-contact" data-formation="0" data-accent="#66e2c0">
-    <h2 class="big">Let's build.</h2>
-    <a class="email" href="mailto:lucasagfranca@gmail.com">lucasagfranca@gmail.com</a>
-    <nav class="links" aria-label="Contact and résumés">
-      <a href="https://github.com/galo13eth">GitHub</a>
-      <a href="https://linkedin.com/in/lucasagfranca">LinkedIn</a>
-      <a href="resume/Lucas_Franca_Web3_Resume.pdf">Web3 résumé</a>
-      <a href="resume/Lucas_Franca_AI_Agent_Platforms_Resume.pdf">AI-platforms résumé</a>
-    </nav>
-    <p class="meta">Full-time remote · international contractor from Brazil (PJ) · Brasília, UTC-3</p>
-    <footer>The field behind this page is one set of particles reorganizing into each chapter's shape: a constellation, a quorum ring, an execution lattice, a d20.</footer>
+  <section id="games" class="content-section s-games" data-formation="3" data-accent="#ff6490">
+    <div class="shell">
+      <header class="section-heading"><p class="eyebrow">2023 — present · Onchain games</p><h2>Games that live on mainnets and stay up.</h2></header>
+      <div class="game-grid">
+        <article class="game-card surface"><p class="card-label">2024–2025 · part-time lead</p><h3>Sekai Glory</h3><p>Led a trading-card game across 16 upgradeable contracts, real-time PvP matchmaking, and five languages — then migrated it live from Blast to Ronin.</p></article>
+        <article class="game-card surface"><p class="card-label">2023–present · DAO council</p><h3>Lifeverse</h3><p>Built deterministic battle simulation on a 60-second server tick, commit-reveal randomness, and the pipeline that generated 4,686 NFT assets.</p></article>
+        <article class="game-card surface"><p class="card-label">2023–2024 · full-stack</p><h3>Realm</h3><p>Worked across a 55-domain Solidity monorepo, three subgraphs, and an AWS rewards engine distributing weekly ARB across the ecosystem.</p></article>
+      </div>
+      <details class="case surface games-case">
+        <summary>Read the case study</summary>
+        <div>
+          <h3>Problem</h3><p>Onchain games fail in ways web apps don't: chains get abandoned mid-product, NFT state is too slow for real-time gameplay, and randomness with money attached invites manipulation.</p>
+          <h3>Ownership</h3><p>Led full-stack delivery at Sekai Glory; DAO council and lead engineering at Lifeverse; full-stack and contracts at Realm — application, contracts, indexers, and infrastructure in each.</p>
+          <h3>Constraints</h3><p>Live players during the Blast-to-Ronin migration; matchmaking that cannot strand a queue; provable fairness for reveals and rewards; small teams owning everything.</p>
+          <h3>Architecture</h3><p>Hybrid state mirrored into PostgreSQL for low-latency simulation with idempotent mint and upgrade flows. UUPS contracts with Forge coverage, deterministic battle simulation with commit-reveal randomness, and subgraphs indexing live game state.</p>
+          <h3>Hard decisions</h3><p>Accepting reconciliation complexity for game-grade latency; rebuilding matchmaking around atomic match creation and Redis-persisted XState; migrating contracts, indexer, and app to Ronin without rebuilding the product.</p>
+          <h3>Outcome</h3><p>176 contracts live on Arbitrum One; the Sekai migration shipped with the game still running; the stuck-queue failure mode was eliminated rather than mitigated.</p>
+          <p class="pr-meta">Private code — detailed in the <a href="resume/Lucas_Franca_Web3_Resume.pdf">Web3 résumé</a></p>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <section id="contact" class="content-section s-contact" data-formation="0" data-accent="#66e2c0">
+    <div class="closing-grid shell">
+      <div>
+        <p class="eyebrow">Since 2014 · Foundations</p><h2>The stack under it all.</h2>
+        <p>Alongside everything, long-term part-time: a decade at Brazil's Federal District Court of Auditors building audit systems and ChatTCDF, the Court's internal RAG chatbot. Computer Science at UFMG. Fluent Portuguese, English, and Spanish.</p>
+        <dl class="stack">
+          <div><dt>Product</dt><dd>TypeScript · React · Next.js · Go · Node · Python · PostgreSQL · Redis</dd></div>
+          <div><dt>Web3</dt><dd>Solidity · Foundry · viem · wagmi · Safe · EAS · The Graph · Ponder</dd></div>
+          <div><dt>Infra</dt><dd>AWS · GCP · Docker · Terraform · WebSockets · SSE · OpenTelemetry</dd></div>
+        </dl>
+      </div>
+      <div class="contact-card surface">
+        <p class="card-label">Full-time remote · international contractor</p><h2>Let's build.</h2>
+        <a class="email" href="mailto:lucasagfranca@gmail.com">lucasagfranca@gmail.com</a>
+        <nav class="contact-links" aria-label="Contact and résumés">
+          <a href="https://github.com/galo13eth">GitHub</a><a href="https://linkedin.com/in/lucasagfranca">LinkedIn</a><a href="resume/Lucas_Franca_Web3_Resume.pdf">Web3 résumé</a><a href="resume/Lucas_Franca_AI_Agent_Platforms_Resume.pdf">AI résumé</a>
+        </nav>
+        <p class="meta">Brasília, Brazil · UTC−3 · 4h+ U.S. Eastern overlap</p>
+      </div>
+      <footer>The field behind this page is one set of particles reorganizing into each chapter's shape: a constellation, a quorum ring, an execution lattice, a d20.</footer>
+    </div>
   </section>
 </main>
 
+<script type="module" src="status.js"></script>
 <script type="module" src="main.js"></script>
 </body>
 </html>

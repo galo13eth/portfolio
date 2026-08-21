@@ -5,7 +5,9 @@
 **Live: [lucasfranca.dev](https://lucasfranca.dev)**
 
 Single-page developer portfolio. Static files, no build step: Three.js loads
-from a CDN via an import map.
+from a CDN via an import map. The proof-forward layout pairs the particle
+identity with a public flagship, live release evidence, and scannable work
+cards on desktop without changing the single-column mobile reading order.
 
 One particle field runs behind the whole page and reorganizes as you scroll
 into the shape of each career chapter — constellation (hero), quorum ring
@@ -40,6 +42,9 @@ The same three checks run in CI on every push.
 
 - The canvas is `aria-hidden` and never intercepts input; all content is
   plain HTML that works without WebGL or JavaScript.
+- The flagship status panel validates the public `evm-migration-lab`
+  `status.json` before rendering it and retains static release links when the
+  artifact is unavailable.
 - `prefers-reduced-motion`: the continuous render loop is replaced by
   single frames on scroll — no ambient drift, no idle spin.
 - Rendering pauses when the tab is hidden.
@@ -69,6 +74,8 @@ auto-deploys. No config files needed — the static files are served as-is.
 - `index.html` — all content, copy, and metadata
 - `style.css` — design tokens at the top of `:root`
 - `main.js` — the Three.js scene: formations, scroll-driven morphing, shaders
+- `status.js` — validated public flagship status with fail-safe fallback
+- `assets/` — locally hosted public project evidence
 - `resume/` — downloadable PDF résumés
 - `tests/` — Playwright smoke tests
 
