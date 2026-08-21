@@ -399,6 +399,7 @@ a:hover { color: var(--a); text-decoration-color: var(--a); }
   letter-spacing: 0.08em;
 }
 .architecture-facts dd { font-size: 0.88rem; line-height: 1.5; }
+.takeait-lifecycle div { grid-template-columns: 6.4rem 1fr; }
 
 .case { padding: 0.2rem 1.2rem 1.2rem; }
 #agora-case,
@@ -426,6 +427,24 @@ a:hover { color: var(--a); text-decoration-color: var(--a); }
   letter-spacing: 0.11em;
 }
 .case-body p { font-size: 0.91rem; }
+
+.takeait-case { padding-inline: clamp(1.2rem, 3vw, 2rem); }
+.takeait-case-lede {
+  max-width: 66rem;
+  padding-block: clamp(1.2rem, 3vw, 2rem) clamp(1.8rem, 4vw, 3rem);
+}
+.takeait-case-lede h3 { max-width: 25ch; margin-block: 0.45rem 1rem; }
+.takeait-case-lede > p:not(.card-label) { max-width: 72ch; }
+.takeait-case-lede > p + p { margin-top: 0.65rem; }
+.takeait-case-chapters {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: clamp(1.5rem, 4vw, 3.5rem);
+}
+.takeait-case-chapter { padding-block: clamp(1.5rem, 3vw, 2.2rem); border-top: 1px solid var(--line); }
+.takeait-case-chapter h3 { max-width: 24ch; margin-block: 0.45rem 0.75rem; }
+.takeait-case-chapter p { font-size: 0.91rem; }
+.takeait-case-chapter p + p { margin-top: 0.65rem; }
 
 .system-diagram { padding: clamp(1.3rem, 3vw, 2rem); }
 .system-diagram h3 { max-width: 20ch; margin-bottom: 1.5rem; }
@@ -660,7 +679,8 @@ a:hover { color: var(--a); text-decoration-color: var(--a); }
   .content-section { padding-block: 4.8rem; }
   .evidence-grid,
   .proof-columns,
-  .capability-grid { grid-template-columns: 1fr; }
+  .capability-grid,
+  .takeait-case-chapters { grid-template-columns: 1fr; }
   .evidence-grid { column-gap: 0; }
   .proof-columns article + article { border-left: 0; border-top: 1px solid var(--line); }
   .decision-list div { grid-template-columns: 1fr; gap: 0.12rem; }

@@ -14,6 +14,7 @@ import {
   productSystems,
   resumes,
   takeaitCase,
+  takeaitLifecycle,
   takeaitProofs,
   web3Stories,
 } from './content.mjs';
@@ -183,22 +184,42 @@ function renderWeb3() {
 function renderTakeaitDiagram() {
   return [
     '<figure class="system-diagram surface takeait-diagram" role="img" aria-labelledby="takeait-diagram-title takeait-diagram-caption">',
-      '<p class="card-label">Durable agent execution</p>',
+      '<p class="card-label">Runner-controlled lifecycle</p>',
       '<h3 id="takeait-diagram-title">From ticket to reviewed pull request.</h3>',
-      '<div class="diagram-node">Ticket</div>',
+      '<div class="diagram-node">Ticket + ordered assignment</div>',
+      '<span class="diagram-arrow" aria-hidden="true">↓ atomic claim</span>',
+      '<div class="diagram-node">Host-wide runner slot</div>',
+      '<span class="diagram-arrow" aria-hidden="true">↓ kernel-released lease</span>',
+      '<div class="diagram-node accent-node">Workspace + profile snapshot</div>',
       '<span class="diagram-arrow" aria-hidden="true">↓</span>',
-      '<div class="diagram-node">Web control plane</div>',
-      '<span class="diagram-arrow" aria-hidden="true">↓</span>',
-      '<div class="diagram-node">GCP provisioning</div>',
-      '<span class="diagram-arrow" aria-hidden="true">↓ poll only</span>',
-      '<div class="diagram-node accent-node">Private Go runner host</div>',
-      '<span class="diagram-arrow" aria-hidden="true">↓</span>',
-      '<div class="diagram-node">Isolated agent workspace</div>',
-      '<span class="diagram-arrow" aria-hidden="true">↓</span>',
-      '<div class="diagram-node">Pull request</div>',
-      '<span class="diagram-return" aria-hidden="true">Human pause · question · redirect · review ↑</span>',
-      '<figcaption id="takeait-diagram-caption">Execution runs on private, zero-inbound hosts.</figcaption>',
+      '<div class="diagram-node">Coding harness + ticket watcher</div>',
+      '<span class="diagram-arrow" aria-hidden="true">↓ pinned completion gate</span>',
+      '<div class="diagram-node">Reviewed PR + provenance</div>',
+      '<span class="diagram-return" aria-hidden="true">Human comment · question · pause · redirect · review ↑</span>',
+      '<figcaption id="takeait-diagram-caption">The control plane coordinates work; private, poll-only Go runners own execution and recovery.</figcaption>',
     '</figure>',
+  ].join('');
+}
+
+function renderTakeaitCase() {
+  return [
+    '<details id="takeait-case" class="case takeait-case surface">',
+      '<summary>Read the full TakeAIt architecture case study</summary>',
+      '<div class="takeait-case-lede">',
+        '<p class="card-label">', h(takeaitCase.eyebrow), '</p>',
+        '<h3>', h(takeaitCase.title), '</h3>',
+        takeaitCase.intro.map((copy) => '<p>' + h(copy) + '</p>').join(''),
+      '</div>',
+      '<div class="takeait-case-chapters">',
+        takeaitCase.chapters.map((chapter) => [
+          '<article class="takeait-case-chapter">',
+            '<span class="row-number">', h(chapter.number), '</span>',
+            '<h3>', h(chapter.title), '</h3>',
+            chapter.copy.map((copy) => '<p>' + h(copy) + '</p>').join(''),
+          '</article>',
+        ].join('')).join(''),
+      '</div>',
+    '</details>',
   ].join('');
 }
 
@@ -222,7 +243,10 @@ function renderAiSystems(page) {
           '<div class="architecture-intro">',
             '<p class="card-label">How a ticket becomes a pull request</p>',
             '<h3>Agents own work; humans retain control.</h3>',
-            '<p>Humans create and supervise work through the control plane. Agents claim tickets and execute inside private, poll-only Go runners, with durable state and explicit intervention points throughout the run.</p>',
+            '<p>A model turn is only one event in a longer ticket lifecycle. TakeAIt orders the work, gives the runner a recoverable execution contract, and keeps people connected from assignment through review.</p>',
+            '<dl class="architecture-facts takeait-lifecycle">',
+              takeaitLifecycle.map((fact) => '<div><dt>' + h(fact.label) + '</dt><dd>' + h(fact.copy) + '</dd></div>').join(''),
+            '</dl>',
           '</div>',
           renderTakeaitDiagram(),
         '</div>',
@@ -234,7 +258,7 @@ function renderAiSystems(page) {
             '</article>',
           ].join('')).join(''),
         '</div>',
-        renderCase('Read the full TakeAIt architecture case study', takeaitCase, 'takeait-case'),
+        renderTakeaitCase(),
       '</div>',
     '</section>',
   ].join('');

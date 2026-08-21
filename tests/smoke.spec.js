@@ -35,6 +35,8 @@ test('keeps architecture context visible and cases full width', async ({ page })
   await expect(page.locator('#web3 #governance-diagram-title')).toHaveText('One governance product, three wallet models.');
   await expect(page.locator('#ai-systems .architecture-intro')).toContainText('How a ticket becomes a pull request');
   await expect(page.locator('#ai-systems #takeait-diagram-title')).toHaveText('From ticket to reviewed pull request.');
+  await expect(page.locator('#ai-systems .takeait-lifecycle > div')).toHaveCount(4);
+  await expect(page.locator('#ai-systems .takeait-lifecycle')).toContainText('runner-owned repository check');
 
   for (const section of ['#web3', '#ai-systems']) {
     const order = await page.locator(`${section} .shell > .architecture-layout, ${section} .shell > .proof-columns, ${section} .shell > details.case`)
@@ -66,7 +68,7 @@ test('renders the targeted AI route from shared content', async ({ page }) => {
   await expect(page.locator('#ai-systems')).toContainText('Agents can claim tickets');
   await expect(page.locator('#ai-systems')).toContainText('Durable workflows');
   await expect(page.locator('#ai-systems')).not.toContainText('model training');
-  await expect(page.locator('#ai-systems .takeait-diagram .diagram-node').first()).toHaveText('Ticket');
+  await expect(page.locator('#ai-systems .takeait-diagram .diagram-node').first()).toHaveText('Ticket + ordered assignment');
 
   const sectionOrder = await page.locator('main > section[id]').evaluateAll((sections) => sections.map((section) => section.id));
   expect(sectionOrder).toEqual(['top', 'ai-systems', 'systems', 'web3', 'product-engineering', 'contact']);
@@ -122,6 +124,19 @@ test('case studies open and close', async ({ page }) => {
   const first = page.locator('details.case').first();
   await first.locator('summary').click();
   await expect(first).toHaveAttribute('open', '');
+});
+
+test('expands the TakeAIt architecture into the complete durable-work lifecycle', async ({ page }) => {
+  await page.goto('/');
+  const caseStudy = page.locator('#takeait-case');
+  await caseStudy.locator('summary').click();
+  await expect(caseStudy).toHaveAttribute('open', '');
+  await expect(caseStudy.locator('.takeait-case-chapter')).toHaveCount(8);
+  await expect(caseStudy).toContainText('The ticket outlives the model turn.');
+  await expect(caseStudy).toContainText('.tai/WORKFLOW.md');
+  await expect(caseStudy).toContainText('Recovery runs before any new work is claimed.');
+  await expect(caseStudy).toContainText('every finding is fixed or rebutted');
+  await expect(caseStudy).toContainText('33,000 lines of non-test code');
 });
 
 test('core content remains readable without JavaScript', async ({ browser }, testInfo) => {
