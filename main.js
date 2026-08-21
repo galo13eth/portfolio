@@ -94,7 +94,32 @@ function icosa() {
   return a;
 }
 
-const formations = [scatter(), ring(), lattice(), icosa()];
+function migrationPath() {
+  const a = new Float32Array(COUNT * 3);
+  const nodes = [
+    [-6, -3, -0.8], [-6, -1, 0.7], [-6, 1, -0.7], [-6, 3, 0.8],
+    [-3.6, -2, -0.4], [-3.6, 2, 0.4],
+    [-0.8, 0, 0], [0, 0.9, 0], [0.8, 0, 0], [0, -0.9, 0], [0, 0, 0.9], [0, 0, -0.9],
+    [3.2, -2, 0.4], [3.2, 0, -0.5], [3.2, 2, 0.4],
+    [6, -3, -0.7], [6, -1, 0.8], [6, 1, -0.8], [6, 3, 0.7],
+  ];
+  const edges = [
+    [0, 4], [1, 4], [2, 5], [3, 5], [4, 6], [5, 6],
+    [6, 7], [7, 8], [8, 9], [9, 6], [6, 10], [10, 8], [6, 11], [11, 8],
+    [8, 12], [8, 13], [8, 14], [12, 15], [12, 16], [13, 16], [13, 17], [14, 17], [14, 18],
+  ];
+
+  for (let i = 0; i < COUNT; i++) {
+    const [fromIndex, toIndex] = edges[i % edges.length];
+    const from = nodes[fromIndex], to = nodes[toIndex], t = Math.random();
+    a[i * 3] = from[0] + (to[0] - from[0]) * t + (Math.random() - 0.5) * 0.12;
+    a[i * 3 + 1] = from[1] + (to[1] - from[1]) * t + (Math.random() - 0.5) * 0.12;
+    a[i * 3 + 2] = from[2] + (to[2] - from[2]) * t + (Math.random() - 0.5) * 0.12;
+  }
+  return a;
+}
+
+const formations = [scatter(), ring(), lattice(), icosa(), migrationPath()];
 
 const geo = new THREE.BufferGeometry();
 geo.setAttribute('position', new THREE.BufferAttribute(formations[0].slice(), 3));
