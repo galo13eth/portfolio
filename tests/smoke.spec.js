@@ -6,7 +6,7 @@ test('renders hero, canvas, and public-engineering cards', async ({ page }) => {
   await expect(page).toHaveTitle(/Lucas Franca/);
   await expect(page.locator('h1')).toContainText('Lucas');
   await expect(page.locator('#scene')).toBeAttached();
-  await expect(page.locator('.s-code .prs li')).toHaveCount(6);
+  await expect(page.locator('.s-code .prs li')).toHaveCount(7);
 });
 
 test('case studies open and close', async ({ page }) => {
