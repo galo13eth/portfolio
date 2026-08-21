@@ -21,18 +21,20 @@ test('features the strongest production systems with typed evidence', async ({ p
   await expect(web3.locator('.evidence-row')).toHaveCount(4);
   await expect(web3).toContainText('One governance product across EOAs, Safes, and embedded wallets.');
   await expect(web3).toContainText('Wallet-linked governance notifications across five channels.');
-  await expect(web3).toContainText('Authorization decisions belong on the server.');
-  await expect(web3).toContainText('A transaction hash was not success.');
+  await expect(web3).toContainText('Citizenship eligibility became an auditable state machine.');
+  await expect(web3).toContainText('Trust became a user-controlled lens, not a platform-wide ranking.');
   await expect(web3).toContainText('Product write-up');
   await expect(web3).toContainText('Merged PR');
   await expect(web3).toContainText('Upstream PR · under review');
   await expect(web3.locator('.additional-evidence')).toContainText('Resumable contract publishing');
+  await expect(web3.locator('.additional-evidence')).toContainText('Server-owned authorization');
+  await expect(web3.locator('.additional-evidence')).toContainText('Sponsored execution reliability');
 });
 
 test('keeps architecture context visible and cases full width', async ({ page }) => {
   await page.goto('/');
   await expect(page.locator('#web3 .architecture-intro')).toContainText('How the system fits together');
-  await expect(page.locator('#web3 #governance-diagram-title')).toHaveText('One governance product, three wallet models.');
+  await expect(page.locator('#web3 #governance-diagram-title')).toHaveText('Accounts, participation, identity, and execution.');
   await expect(page.locator('#ai-systems .architecture-intro')).toContainText('How a ticket becomes a pull request');
   await expect(page.locator('#ai-systems #takeait-diagram-title')).toHaveText('From ticket to reviewed pull request.');
   await expect(page.locator('#ai-systems .takeait-lifecycle > div')).toHaveCount(4);
@@ -49,14 +51,38 @@ test('keeps metrics contextual and removes dashboard internals', async ({ page }
   await page.goto('/');
   await expect(page.locator('#web3')).toContainText('90+ merged public production PRs');
   await expect(page.locator('#onchain-products')).toContainText('approximately 16');
-  await expect(page.locator('#onchain-products')).toContainText('4,686-token');
-  await expect(page.locator('#onchain-products')).toContainText('more than 50 game domains');
+  await expect(page.locator('#onchain-products')).toContainText('4,686 Arbitrum Imbued Souls');
+  await expect(page.locator('#onchain-products')).toContainText('more than 185,000 transactions');
 
   const body = await page.locator('body').innerText();
   expect(body).not.toContain('176 contracts');
   expect(body).not.toContain('Merkle root');
   expect(body).not.toContain('Snapshot block');
   expect(body).not.toContain('4 / 4');
+});
+
+test('shows product and onchain evidence for all three games', async ({ page }) => {
+  await page.goto('/');
+  const games = page.locator('#onchain-products');
+  await expect(games.locator('.onchain-project')).toHaveCount(3);
+  await expect(games.locator('.onchain-media img')).toHaveCount(4);
+  await expect(games).toContainText('Official gameplay demo');
+  await expect(games).toContainText('4,686 Imbued Souls');
+  await expect(games).toContainText('BattleVersusV3 · 185k+ transactions');
+  await expect(games).toContainText('Historical production system');
+  await expect(games).not.toContainText('deterministic battle simulation');
+  await expect(games).not.toContainText('more than 50 game domains');
+});
+
+test('expands the Agora case across the public governance stack', async ({ page }) => {
+  await page.goto('/');
+  const caseStudy = page.locator('#agora-case');
+  await caseStudy.locator('summary').click();
+  await expect(caseStudy.locator('.takeait-case-chapter')).toHaveCount(6);
+  await expect(caseStudy).toContainText('Identity and eligibility are product state.');
+  await expect(caseStudy).toContainText('Trust can be plural and contextual.');
+  await expect(caseStudy).toContainText('dao-node and CPLS');
+  await expect(caseStudy.locator('.case-evidence li')).toHaveCount(9);
 });
 
 test('renders the targeted AI route from shared content', async ({ page }) => {
