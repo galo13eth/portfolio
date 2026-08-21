@@ -70,10 +70,10 @@ test('shows product and onchain evidence for all three games', async ({ page }) 
   await expect(games).toContainText('Official gameplay archive');
   await expect(games).toContainText('stopped work that was not meeting the DAO’s quality or delivery bar');
   await expect(games).toContainText('NFT-holder ERC-20 claims · 738 transactions');
-  await expect(games).toContainText('BattleVersusV3 · 185k+ transactions');
-  await expect(games).toContainText('BattleVersusV2 · 56k+ transactions');
-  await expect(games).toContainText('Crafting · 25k+ transactions');
-  await expect(games).toContainText('Transcendence · 9.5k+ transactions');
+  await expect(games).toContainText('4 contracts · 277k+ transactions');
+  const realmEvidence = games.locator('.onchain-project.realm .onchain-evidence a');
+  await expect(realmEvidence).toHaveCount(3);
+  await expect(realmEvidence.first()).toHaveAttribute('href', 'https://arbiscan.io/address/0x2cfcaff3289142E79173B856293D6128B6bD05c6');
   await expect(games).toContainText('Batched transaction payloads');
   await expect(games).toContainText('Historical production system');
   await expect(games).not.toContainText('deterministic battle simulation');
@@ -95,6 +95,11 @@ test('opens and closes enlarged Realm evidence images', async ({ page }) => {
   await expect(dialog).toHaveAttribute('open', '');
   await expect(dialog.locator('img')).toHaveAttribute('src', '/assets/realm-boost-rewards.webp');
   await expect(dialog.locator('#realm-lightbox-caption')).toHaveText('Historical realm productivity interface');
+
+  const box = await dialog.boundingBox();
+  const viewport = page.viewportSize();
+  expect(Math.abs(box.x + box.width / 2 - viewport.width / 2)).toBeLessThan(2);
+  expect(Math.abs(box.y + box.height / 2 - viewport.height / 2)).toBeLessThan(2);
 
   await dialog.locator('.realm-lightbox-image').click();
   await expect(dialog).not.toHaveAttribute('open', '');

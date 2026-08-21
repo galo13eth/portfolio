@@ -715,8 +715,7 @@ a:hover { color: var(--a); text-decoration-color: var(--a); }
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 0.6rem;
 }
-.onchain-evidence.evidence-count-3,
-.onchain-evidence.evidence-count-6 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.onchain-evidence.evidence-count-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 .onchain-evidence > a {
   min-height: 4.35rem;
   padding: 0.68rem 0.78rem;
@@ -748,9 +747,12 @@ a:hover { color: var(--a); text-decoration-color: var(--a); }
 .onchain-evidence strong { font-size: 0.78rem; line-height: 1.4; }
 
 .realm-lightbox {
+  position: fixed;
+  inset: 0;
   width: min(1100px, calc(100% - 2rem));
   max-width: none;
   max-height: calc(100svh - 2rem);
+  margin: auto;
   padding: 0;
   border: 0;
   overflow: visible;
@@ -885,8 +887,7 @@ a:hover { color: var(--a); text-decoration-color: var(--a); }
   }
   .onchain-media { max-width: 32rem; justify-self: start; }
   .onchain-evidence,
-  .onchain-evidence.evidence-count-3,
-  .onchain-evidence.evidence-count-6 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .onchain-evidence.evidence-count-3 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .hero-grid { gap: 3rem; }
   .hero-copy { max-width: 48rem; }
   .route-index,
@@ -920,8 +921,7 @@ a:hover { color: var(--a); text-decoration-color: var(--a); }
   .additional-evidence li { grid-template-columns: 1fr; gap: 0.15rem; }
   .case-evidence li { grid-template-columns: 1fr; gap: 0.2rem; }
   .onchain-evidence,
-  .onchain-evidence.evidence-count-3,
-  .onchain-evidence.evidence-count-6 { grid-template-columns: 1fr; }
+  .onchain-evidence.evidence-count-3 { grid-template-columns: 1fr; }
   .editorial-row {
     grid-template-columns: 2rem 1fr;
     gap: 0.55rem 0.8rem;
