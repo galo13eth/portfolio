@@ -4,10 +4,9 @@
 
 **Live: [lucasfranca.dev](https://lucasfranca.dev)**
 
-Single-page developer portfolio. Static files, no build step: Three.js loads
-from a CDN via an import map. The proof-forward layout pairs the particle
-identity with a public flagship, live release evidence, and scannable work
-cards on desktop without changing the single-column mobile reading order.
+Static editorial portfolio with Web3-first, AI-platform, and résumé routes.
+Three.js loads from a CDN via an import map; a dependency-free Node script
+generates the committed pages from one shared content source.
 
 One particle field runs behind the whole page and reorganizes as you scroll
 into the shape of each career chapter — constellation (hero), quorum ring
@@ -28,7 +27,8 @@ ES module; `file://` won't work.)
 ```sh
 cd tests
 npm install
-npm run validate   # html-validate on index.html
+npm run generate:check # generated pages match the shared content
+npm run validate   # html-validate on every route
 npm run links      # internal link/asset check
 npm test           # Playwright smoke: desktop + mobile, axe accessibility scan
 ```
@@ -36,15 +36,14 @@ npm test           # Playwright smoke: desktop + mobile, axe accessibility scan
 (Tooling lives in `tests/` so the repo root stays a plain static site —
 Railway's static deploy breaks if a `package.json` sits at the root.)
 
-The same three checks run in CI on every push.
+The same four checks run in CI on every push.
 
 ## Accessibility & motion
 
 - The canvas is `aria-hidden` and never intercepts input; all content is
   plain HTML that works without WebGL or JavaScript.
-- The flagship status panel validates the public `evm-migration-lab`
-  `status.json` before rendering it and retains static release links when the
-  artifact is unavailable.
+- Project integrations remain quiet evidence links inside their relevant
+  sections rather than runtime dependencies for the homepage.
 - `prefers-reduced-motion`: the continuous render loop is replaced by
   single frames on scroll — no ambient drift, no idle spin.
 - Rendering pauses when the tab is hidden.
@@ -71,10 +70,11 @@ auto-deploys. No config files needed — the static files are served as-is.
 
 ## Files
 
-- `index.html` — all content, copy, and metadata
+- `site/content.mjs` — shared evidence, project copy, and route data
+- `site/render.mjs` — dependency-free generator for `/`, `/ai/`, and `/resume/`
+- `index.html`, `ai/`, `resume/index.html` — committed generated pages
 - `style.css` — design tokens at the top of `:root`
-- `main.js` — the Three.js scene: formations, scroll-driven morphing, shaders
-- `status.js` — validated public flagship status with fail-safe fallback
+- `main.js` — the Three.js scene: scroll and route-preview formations
 - `assets/` — locally hosted public project evidence
 - `resume/` — downloadable PDF résumés
 - `tests/` — Playwright smoke tests

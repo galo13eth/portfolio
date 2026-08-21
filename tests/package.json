@@ -3,7 +3,9 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "validate": "html-validate ../index.html",
+    "generate": "node ../site/render.mjs",
+    "generate:check": "node ../site/render.mjs --check",
+    "validate": "html-validate ../index.html ../ai/index.html ../resume/index.html",
     "links": "linkinator ../ --recurse --skip \"^https?://(?!localhost)\"",
     "test": "playwright test"
   },
