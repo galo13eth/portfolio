@@ -384,10 +384,7 @@ export const onchainProducts = [
       { src: '/assets/realm-boost-rewards.webp', alt: 'Realm boost rewards browser with productivity and ANIMA staking data', width: 1100, height: 1359, label: 'Historical realm productivity interface', enlarge: true },
     ],
     evidence: [
-      ['Verified battle contract', 'BattleVersusV3 · 185k+ transactions', 'https://arbiscan.io/address/0x2cfcaff3289142E79173B856293D6128B6bD05c6'],
-      ['Verified battle contract', 'BattleVersusV2 · 56k+ transactions', 'https://arbiscan.io/address/0x7abf1cae387a2dc7f7876dc3f2861e6c0fc9cd54'],
-      ['Verified crafting contract', 'Crafting · 25k+ transactions', 'https://arbiscan.io/address/0xb8d64eb58ee358f5e76465bb702f60a04d1f2850'],
-      ['Verified progression contract', 'Transcendence · 9.5k+ transactions', 'https://arbiscan.io/address/0x74bfd46a3410d634d6a2361ab8e9cb6cec83c0e8'],
+      ['Verified gameplay contracts', '4 contracts · 277k+ transactions', 'https://arbiscan.io/address/0x2cfcaff3289142E79173B856293D6128B6bD05c6'],
       ['Token', 'ANIMA on Arbitrum', 'https://arbitrum.blockscout.com/token/0xcCd05A0fcfc1380e9Da27862Adb2198E58e0D66f'],
       ['Onchain collection', '5,015 Realm NFTs', 'https://opensea.io/collection/rlmverse'],
     ],
