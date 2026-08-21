@@ -99,44 +99,106 @@ export const web3Stories = [
     ],
   },
   {
-    id: 'authorization',
-    label: 'Authorization',
-    title: 'Authorization decisions belong on the server.',
-    problem: 'Forum actions trusted per-action client signatures and client-supplied authorization flags.',
-    decision: 'Reuse SIWE JWT authentication and move ownership plus RBAC checks server-side.',
-    outcome: 'Smaller clients and gated administrative APIs with one authorization boundary.',
-    stack: 'SIWE · JWT · RBAC',
+    id: 'citizenship',
+    label: 'Identity and eligibility',
+    title: 'Citizenship eligibility became an auditable state machine.',
+    problem: 'Optimism Season 9 needed to resist Sybil registrations without forcing every legitimate participant through the same verification path.',
+    decision: 'Combine wallet and social trust signals, explicit eligibility outcomes, conditional identity verification, and EAS-backed issuance in one staged flow.',
+    outcome: 'Citizenship registration gained priority windows, audit history, revocation, and atomic persistence instead of one opaque pass-or-fail check.',
+    stack: 'Human Passport · OpenRank · EAS · Privy · PostgreSQL',
     evidence: [
-      ['Merged PR', 'agora-next#1437', 'https://github.com/voteagora/agora-next/pull/1437'],
+      ['Merged PR', 'op-atlas#1465', 'https://github.com/voteagora/op-atlas/pull/1465'],
     ],
   },
   {
-    id: 'relay',
-    label: 'Production debugging',
-    title: 'A transaction hash was not success.',
-    problem: 'Relayed delegateBySig transactions submitted successfully but reverted out of gas.',
-    decision: 'Trace real receipts, replace fixed limits with estimate-based buffers, and verify completion.',
-    outcome: 'The UI reports success only after the sponsored transaction actually succeeds.',
-    stack: 'EIP-712 · gas relays · tracing',
+    id: 'trust-graphs',
+    label: 'Trust graphs',
+    title: 'Trust became a user-controlled lens, not a platform-wide ranking.',
+    problem: 'Token communities needed portable trust signals without one global score becoming authoritative for every user and every context.',
+    decision: 'Add graph selection, EIP-712 profile vouching, explicit linked-wallet identity rules, and a contextual feed lens behind one external API boundary.',
+    outcome: 'People can choose how trust shapes their feed, switch graphs without reloading, and keep content available if the optional trust service is down.',
+    stack: 'EIP-712 · linked wallets · OpenAPI · trust graphs',
     evidence: [
-      ['Merged PR', 'agora-next#1514', 'https://github.com/voteagora/agora-next/pull/1514'],
+      ['Merged PR', 'holders.vote#161', 'https://github.com/voteagora/holders.vote/pull/161'],
     ],
   },
 ];
 
 export const additionalEvidence = [
-  ['Merged PR', 'Optimism citizenship and Sybil resistance', 'https://github.com/voteagora/op-atlas/pull/1465'],
-  ['Merged PR', 'Resumable contract publishing', 'https://github.com/voteagora/op-atlas/pull/1441'],
-  ['Upstream PR · under review', 'Go webhook authentication', 'https://github.com/superplanehq/superplane/pull/6702'],
+  { id: 'publishing', type: 'Merged PR', title: 'Resumable contract publishing', href: 'https://github.com/voteagora/op-atlas/pull/1441' },
+  { id: 'authorization', type: 'Merged PR', title: 'Server-owned authorization', href: 'https://github.com/voteagora/agora-next/pull/1437' },
+  { id: 'relay', type: 'Merged PR', title: 'Sponsored execution reliability', href: 'https://github.com/voteagora/agora-next/pull/1514' },
+  { id: 'webhook', type: 'Upstream PR · under review', title: 'Go webhook authentication', href: 'https://github.com/superplanehq/superplane/pull/6702' },
 ];
 
 export const agoraCase = {
-  problem: 'Optimism, ENS, and Uniswap needed one product covering proposals, voting, delegation, grants, and identity across EOAs, Safe multisigs, and embedded wallets.',
-  ownership: 'Architecture and end-to-end delivery of multi-tenant governance features: Safe-native signing, notifications, authentication, attestation-backed eligibility, and citizenship registration.',
-  constraints: 'One codebase serving live DAOs behind per-tenant flags; every change backward-compatible; security stakes measured in treasuries.',
-  architecture: 'A multi-tenant React and TypeScript product over indexed onchain data, reusable SIWE authorization, Safe-aware signing, and receipt-verified execution.',
-  decisions: 'Move authorization server-side, isolate embedded-wallet adoption behind tenant boundaries, and size sponsored transaction gas from production traces.',
-  outcome: 'Shipped across a dozen-plus tenant DAOs, with 90+ merged production pull requests in Agora public repositories.',
+  eyebrow: 'Governance is more than a voting screen',
+  title: 'One product boundary from identity to mined receipt.',
+  intro: [
+    'Agora’s products connect account models, governance state, identity and eligibility, program operations, notifications, and onchain execution across multiple live organizations.',
+    'My public work spans that path—from Safe and embedded-wallet onboarding through citizenship attestations, trust graphs, contract publication, and receipt-verified completion.',
+  ],
+  chapters: [
+    {
+      number: '01',
+      title: 'One multi-tenant product, different account models.',
+      copy: [
+        'EOAs, Safe multisigs, and embedded wallets require different onboarding, session, signature, and execution behavior. The product still has to expose one coherent proposal, voting, delegation, and transaction experience.',
+        'I shipped automatic Safe detection and signer progress, reusable SIWE sessions, and tenant-gated Privy integration while preserving the existing wagmi, EIP-712, and relay paths for live organizations.',
+      ],
+    },
+    {
+      number: '02',
+      title: 'Identity and eligibility are product state.',
+      copy: [
+        'OP Atlas connects project and team identity, linked wallets, grants, citizenship, KYC or World ID, attestations, and revocation. Those decisions must remain explainable after the registration screen disappears.',
+        'For Optimism Season 9, I combined parallel wallet and social trust evaluation with explicit ALLOW, NEEDS_VERIFICATION, and BLOCKED outcomes, priority windows, atomic issuance, and a durable evaluation trail.',
+      ],
+    },
+    {
+      number: '03',
+      title: 'Trust can be plural and contextual.',
+      copy: [
+        'Holders.vote lets a viewer choose one trust graph—or none—rather than allowing a single platform score to become universal reputation.',
+        'Profiles prepare, sign, and submit EIP-712 vouches; linked wallets retain explicit raw-key identity semantics; and the feed applies the selected graph through a server-only external API boundary that fails open for content availability.',
+      ],
+    },
+    {
+      number: '04',
+      title: 'Long-running operations need durable semantics.',
+      copy: [
+        'Publishing hundreds of contracts exceeded PostgreSQL’s bind-parameter ceiling and could not remain one browser-bound transaction.',
+        'I split large publications into authenticated, persisted batches with resumable progress and a separate final metadata phase, while keeping smaller publications atomic.',
+      ],
+    },
+    {
+      number: '05',
+      title: 'Submitted is not completed.',
+      copy: [
+        'Authorization decisions moved from client assertions into reusable SIWE-backed server boundaries with tenant, ownership, and role checks.',
+        'For sponsored execution, production traces showed that a relay transaction could be submitted, mined, and still fail. Gas limits became estimate-based and the UI began treating a successful receipt—not a transaction hash—as completion.',
+      ],
+    },
+    {
+      number: '06',
+      title: 'The product depends on more than contracts.',
+      copy: [
+        'Notification preferences, delivery permissions, indexed governance state, and canonical proposal data connect the product to users between onchain actions.',
+        'My application work consumed services such as dao-node and CPLS alongside Snapshot, EAS, RPCs, indexers, relayers, and five notification channels. Those are integration dependencies, not claims that I authored every service.',
+      ],
+    },
+  ],
+  evidence: [
+    ['Wallet architecture', 'Merged PR', 'agora-next#1567', 'https://github.com/voteagora/agora-next/pull/1567'],
+    ['Safe workflows', 'Product write-up', 'Safe Wallet Improvements', 'https://www.agora.xyz/blogs/15-safe-wallet-improvements'],
+    ['Notifications', 'Product write-up', 'Notifications Hub', 'https://www.agora.xyz/blogs/9-notification-hub'],
+    ['Citizenship', 'Merged PR', 'op-atlas#1465', 'https://github.com/voteagora/op-atlas/pull/1465'],
+    ['Trust graphs', 'Merged PR', 'holders.vote#161', 'https://github.com/voteagora/holders.vote/pull/161'],
+    ['Contract publication', 'Merged PR', 'op-atlas#1441', 'https://github.com/voteagora/op-atlas/pull/1441'],
+    ['Execution reliability', 'Merged PR', 'agora-next#1514', 'https://github.com/voteagora/agora-next/pull/1514'],
+    ['Indexed state', 'Integration context', 'dao-node', 'https://github.com/voteagora/dao-node'],
+    ['Proposal aggregation', 'Integration context', 'CPLS', 'https://github.com/voteagora/cpls'],
+  ],
 };
 
 export const takeaitProofs = [
@@ -266,31 +328,127 @@ export const migrationProofs = [
 export const onchainProducts = [
   {
     id: 'sekai',
-    meta: '2024–2025 · part-time lead',
+    meta: 'Live product · 2024–2025 · part-time lead',
     title: 'Sekai Glory',
-    copy: 'Led a trading-card game across approximately 16 upgradeable contracts, real-time matchmaking and recovery, a five-language PWA, and a live Blast-to-Ronin migration.',
+    headline: 'A mobile Web3 card game across contracts, indexed state, and real-time play.',
+    copy: 'I owned the product path from an approximately 16-contract application and indexed tournament state through wallet UX, live matchmaking, recovery flows, and the Blast-to-Ronin migration.',
+    points: [
+      'Upgradeable game contracts for cards, packs, crafting, equipment, tournaments, and battle-pass state.',
+      'A five-language mobile PWA with quests, deck management, matchmaking, and animated battles.',
+      'Multi-chain state and migration work, including production fixes around gas, queues, and failed transactions.',
+    ],
+    media: [
+      { src: '/assets/sekai-glory-gameplay.webp', alt: 'Sekai Glory mobile card battle in progress', width: 720, height: 1030, href: 'https://x.com/SekaiGlory/status/1887676591003595253', label: 'Official gameplay demo' },
+    ],
+    evidence: [
+      ['Official product', 'Sekai Glory', 'https://www.sekaiglory.com/en'],
+      ['Official gameplay demo', '2:14 mobile battle flow', 'https://x.com/SekaiGlory/status/1887676591003595253'],
+      ['Official documentation', 'Game and Ronin overview', 'https://rng-1.gitbook.io/sekaiglory'],
+      ['Historical collection', 'Sekai Glory TCG on Blast', 'https://opensea.io/item/blast/0x10fe37bac405b209f83ff523fb8d00c0c3f508a8/303977'],
+    ],
   },
   {
     id: 'lifeverse',
-    meta: '2023–present · DAO council',
-    title: 'Lifeverse',
-    copy: 'Built deterministic battle simulation, commit-reveal systems, DAO and data infrastructure, and the pipeline that generated a 4,686-token asset collection.',
+    meta: 'Live ecosystem · 2023–present · DAO council',
+    title: 'Lifeverse / Colosseum of Phanes',
+    headline: 'Game state spanning onchain assets and seasonal application logic.',
+    copy: 'I built product and data workflows around 4,686 Arbitrum Imbued Souls: registration, battles, missions, traits, rewards, and the asset pipeline that made every final character inspectable.',
+    points: [
+      'Server-authoritative seasonal battle workflows with recorded odds, outcomes, and transactional duplicate-action protection.',
+      'Integration with onchain Soul assets and asynchronous evolution and randomness workflows.',
+      'A byte-stable 4,686-asset visual and data pipeline delivered into the public collection and ecosystem.',
+    ],
+    media: [
+      { src: '/assets/lifeverse-ecosystem.webp', alt: 'Lifeverse Web3 gaming ecosystem homepage on Arbitrum', width: 1280, height: 800, href: 'https://lifeverse.gg/', label: 'Official ecosystem' },
+    ],
+    evidence: [
+      ['Official ecosystem', 'Lifeverse', 'https://lifeverse.gg/'],
+      ['Official game documentation', 'Colosseum of Phanes', 'https://docs.lifeverse.gg/lifeverse-games/lifeverse-studio/colosseum-of-phanes'],
+      ['Onchain collection', '4,686 Imbued Souls', 'https://opensea.io/collection/imbuedsoul'],
+      ['Verified contract', 'SeedEvolution · 10k+ transactions', 'https://arbitrum.blockscout.com/address/0x3e455c3321Ef4861DD8492d7FC099190a846458a'],
+    ],
   },
   {
     id: 'realm',
-    meta: '2023–2024 · full-stack',
+    meta: 'Historical production system · 2023–2024 · full-stack',
     title: 'Realm',
-    copy: 'Worked across a Solidity monorepo spanning more than 50 game domains, three subgraphs, wallet-connected gameplay, and AWS rewards infrastructure.',
+    headline: 'Wallet UX for a transaction-heavy onchain strategy game.',
+    copy: 'I owned full-stack product integration across battle, equipment, missions, construction, resources, crafting, and ANIMA staking—reconciling contract writes, indexed state, local projections, and transaction lifecycle UX.',
+    points: [
+      'Battle and equipment workflows over a verified contract that had processed more than 185,000 transactions by August 2026.',
+      'Data-heavy resource, productivity, refinery, staking, and reward interfaces.',
+      'Synchronization among contract writes, three subgraphs, local simulations, and failure-aware wallet UX.',
+    ],
+    media: [
+      { src: '/assets/realm-anima-staking.webp', alt: 'Realm ANIMA staking and rewards interface', width: 814, height: 798, label: 'Historical ANIMA staking interface' },
+      { src: '/assets/realm-boost-rewards.webp', alt: 'Realm boost rewards browser with productivity and ANIMA staking data', width: 1100, height: 1359, label: 'Historical realm productivity interface' },
+    ],
+    evidence: [
+      ['Verified contract', 'BattleVersusV3 · 185k+ transactions', 'https://arbitrum.blockscout.com/address/0x2cfcaff3289142E79173B856293D6128B6bD05c6'],
+      ['Onchain transaction', 'Decoded battle and ANIMA reward', 'https://www.arbiscan.io/tx/0x850c7a5224f60f640ff9ce4582cd897fcf1d95360406969ac4de42b5b863baca'],
+      ['Token', 'ANIMA on Arbitrum', 'https://arbitrum.blockscout.com/token/0xcCd05A0fcfc1380e9Da27862Adb2198E58e0D66f'],
+      ['Onchain collection', '5,015 Realm NFTs', 'https://opensea.io/collection/rlmverse'],
+    ],
   },
 ];
 
 export const gamesCase = {
-  problem: "Onchain games fail differently from web products: source chains can be abandoned, NFT state is too slow for real-time play, and randomness cannot trust a server.",
-  ownership: 'Product architecture, contracts, indexing, backend workflows, real-time interfaces, operations, and migration planning across three games.',
-  constraints: 'Mainnet assets, irreversible transactions, real-time player expectations, heterogeneous wallets, and zero-downtime migrations.',
-  architecture: 'Hybrid systems mirror chain state into PostgreSQL and subgraphs, drive deterministic simulation offchain, and reconcile results through idempotent onchain workflows.',
-  decisions: 'Use commit-reveal randomness, persist queue state and acknowledgements, and treat snapshot boundaries as final during chain migrations.',
-  outcome: 'Shipped production games across Ronin and Arbitrum while eliminating stuck-queue and restart failure modes rather than masking them.',
+  eyebrow: 'Full-stack onchain games',
+  title: 'The contract is only one state machine.',
+  intro: [
+    'A player experiences one product, but its state crosses wallets, contracts, indexers, servers, queues, local projections, and the interface.',
+    'Across Sekai Glory, Lifeverse, and Realm, my work concentrated on keeping those boundaries coherent under real transactions, real-time expectations, and irreversible assets.',
+  ],
+  chapters: [
+    {
+      number: '01',
+      title: 'Optimistic interfaces over slow finality.',
+      copy: [
+        'Approvals, signatures, submission, mining, indexing, and reflected UI are distinct states. The interface must stay responsive without pretending any intermediate state is final.',
+        'I built transaction lifecycle UX around explicit pending, confirmed, failed, stale, and recovered states so a user could understand what the chain had actually accepted.',
+      ],
+    },
+    {
+      number: '02',
+      title: 'Derived game state crosses several sources.',
+      copy: [
+        'Battles, equipment, tournament state, productivity, rewards, and crafting combine contract reads, subgraph data, server records, and local calculations.',
+        'The hard work is defining which source owns each transition, how stale projections are reconciled, and when the product should recompute rather than trust cached state.',
+      ],
+    },
+    {
+      number: '03',
+      title: 'Real-time systems live beside the chain.',
+      copy: [
+        'Matchmaking, queues, delivery acknowledgements, recovery, notifications, and seasonal progression cannot wait for a block explorer refresh.',
+        'Sekai used atomic match creation, persisted queue state, acknowledgements, lock recovery, and health monitoring; Lifeverse used transactional server-owned battle and reward workflows around the onchain assets.',
+      ],
+    },
+    {
+      number: '04',
+      title: 'Transaction-heavy gameplay changes product design.',
+      copy: [
+        'Realm treated battles, equipment, missions, construction, crafting, resources, and staking as onchain state transitions—not decorative mints.',
+        'The application had to coordinate writes, three subgraphs, local projections, gas and receipt behavior, and data-dense resource interfaces while remaining understandable to a player.',
+      ],
+    },
+    {
+      number: '05',
+      title: 'Migration is a continuity problem.',
+      copy: [
+        'Moving a live game between chains changes contracts, indexed data, wallets, operations, and the meaning of late transfers at once.',
+        'For Sekai’s Blast-to-Ronin migration, the snapshot boundary was treated as final and product flows were updated around the new execution and indexing boundaries rather than presenting the move as a trustless bridge.',
+      ],
+    },
+    {
+      number: '06',
+      title: 'Ownership differed by project.',
+      copy: [
+        'Sekai and Lifeverse included contract, product, data, and operational work. Realm’s strongest attributable scope is the wallet-connected application and integration layer over a large existing protocol.',
+        'The public evidence below distinguishes official products, product media, verified contracts, transactions, tokens, and collections instead of treating each link as equivalent proof of authorship.',
+      ],
+    },
+  ],
 };
 
 export const productSystems = [

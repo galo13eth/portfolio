@@ -91,21 +91,32 @@ function renderHero(kind) {
   ].join('');
 }
 
-function renderCase(title, content, id) {
-  const labels = {
-    problem: 'Problem',
-    ownership: 'Ownership',
-    constraints: 'Constraints',
-    architecture: 'Architecture',
-    decisions: 'Hard decisions',
-    outcome: 'Outcome',
-  };
+function renderEditorialCase(summary, content, id) {
   return [
     '<details id="', id, '" class="case surface">',
-      '<summary>', h(title), '</summary>',
-      '<div class="case-body">',
-        Object.entries(content).map(([key, copy]) => '<div><h3>' + labels[key] + '</h3><p>' + h(copy) + '</p></div>').join(''),
+      '<summary>', h(summary), '</summary>',
+      '<div class="takeait-case-lede">',
+        '<p class="card-label">', h(content.eyebrow), '</p>',
+        '<h3>', h(content.title), '</h3>',
+        content.intro.map((copy) => '<p>' + h(copy) + '</p>').join(''),
       '</div>',
+      '<div class="takeait-case-chapters">',
+        content.chapters.map((chapter) => [
+          '<article class="takeait-case-chapter">',
+            '<span class="row-number">', h(chapter.number), '</span>',
+            '<h3>', h(chapter.title), '</h3>',
+            chapter.copy.map((copy) => '<p>' + h(copy) + '</p>').join(''),
+          '</article>',
+        ].join('')).join(''),
+      '</div>',
+      content.evidence ? [
+        '<div class="case-evidence">',
+          '<p class="card-label">Public evidence and integration context</p>',
+          '<ul>', content.evidence.map(([system, type, label, href]) => [
+            '<li><strong>', h(system), '</strong><span>', h(type), '</span>', link(h(label) + ' ↗', href), '</li>',
+          ].join('')).join(''), '</ul>',
+        '</div>',
+      ].join('') : '',
     '</details>',
   ].join('');
 }
@@ -113,16 +124,18 @@ function renderCase(title, content, id) {
 function renderGovernanceDiagram() {
   return [
     '<figure class="system-diagram surface" role="img" aria-labelledby="governance-diagram-title governance-diagram-caption">',
-      '<p class="card-label">Wallet-aware governance flow</p>',
-      '<h3 id="governance-diagram-title">One governance product, three wallet models.</h3>',
+      '<p class="card-label">Multi-product governance stack</p>',
+      '<h3 id="governance-diagram-title">Accounts, participation, identity, and execution.</h3>',
       '<div class="diagram-inputs"><span>EOA</span><span>Safe</span><span>Embedded wallet</span></div>',
       '<span class="diagram-arrow" aria-hidden="true">↓</span>',
-      '<div class="diagram-node accent-node">Wallet-aware product layer</div>',
+      '<div class="diagram-node accent-node">Account-aware onboarding · SIWE · EIP-712</div>',
       '<span class="diagram-arrow" aria-hidden="true">↓</span>',
-      '<div class="diagram-split"><span>SIWE authorization</span><span>EIP-712 signing</span></div>',
+      '<div class="diagram-inputs"><span>Agora governance</span><span>OP Atlas programs</span><span>Holders.vote trust</span></div>',
       '<span class="diagram-arrow" aria-hidden="true">↓</span>',
-      '<div class="diagram-split"><span>Indexed governance</span><span>Onchain execution</span></div>',
-      '<figcaption id="governance-diagram-caption">Account-specific onboarding and signing converge on shared authorization, indexed governance state, and receipt-verified execution.</figcaption>',
+      '<div class="diagram-inputs"><span>Indexed state</span><span>Proposal data</span><span>Notifications</span></div>',
+      '<span class="diagram-arrow" aria-hidden="true">↓</span>',
+      '<div class="diagram-split"><span>Governors · EAS</span><span>Relay or wallet → receipt</span></div>',
+      '<figcaption id="governance-diagram-caption">Public product work sits above integrated services such as dao-node, CPLS, indexers, RPCs, and relayers.</figcaption>',
     '</figure>',
   ].join('');
 }
@@ -158,24 +171,24 @@ function renderWeb3() {
         '</ol>',
         '<aside class="additional-evidence" aria-label="Additional engineering evidence">',
           '<p class="card-label">Additional engineering evidence</p>',
-          '<ul>', additionalEvidence.map(([type, label, href]) => [
-            '<li><span>', h(type), '</span>', link(h(label) + ' ↗', href), '</li>',
+          '<ul>', additionalEvidence.map((evidence) => [
+            '<li><span>', h(evidence.type), '</span>', link(h(evidence.title) + ' ↗', evidence.href), '</li>',
           ].join('')).join(''), '</ul>',
         '</aside>',
         '<div class="architecture-layout">',
           '<div class="architecture-intro">',
             '<p class="card-label">How the system fits together</p>',
-            '<h3>One governance product across three wallet models.</h3>',
-            '<p>EOAs, Safes, and embedded wallets need different onboarding and signing experiences. They converge on shared server-owned authorization, indexed governance state, and receipt-verified execution.</p>',
+            '<h3>Governance is more than a voting screen.</h3>',
+            '<p>Account models, participation, identity, eligibility, program operations, indexed state, notifications, and onchain execution all meet inside the same product boundary.</p>',
             '<dl class="architecture-facts">',
-              '<div><dt>My role</dt><dd>Architecture and end-to-end implementation</dd></div>',
+              '<div><dt>My role</dt><dd>Architecture and end-to-end delivery across Agora product repositories</dd></div>',
               '<div><dt>Constraint</dt><dd>One backward-compatible multi-tenant product</dd></div>',
-              '<div><dt>Result</dt><dd>Wallet-aware workflows across live governance deployments</dd></div>',
+              '<div><dt>Result</dt><dd>90+ merged public PRs across production governance systems</dd></div>',
             '</dl>',
           '</div>',
           renderGovernanceDiagram(),
         '</div>',
-        renderCase('Read the full Agora case study', agoraCase, 'agora-case'),
+        renderEditorialCase('Read the full Agora case study', agoraCase, 'agora-case'),
       '</div>',
     '</section>',
   ].join('');
@@ -308,17 +321,32 @@ function renderOnchain() {
           '<h2>Onchain products that stay up</h2>',
           '<p>Real-time gameplay, irreversible assets, and live chain migrations treated as product and operations problems—not contract demos.</p>',
         '</header>',
-        '<div class="editorial-list">',
+        '<div class="onchain-projects">',
           onchainProducts.map((product, index) => [
-            '<article class="editorial-row">',
-              '<span class="row-number">0', index + 1, '</span>',
-              '<p class="card-label">', h(product.meta), '</p>',
-              '<h3>', h(product.title), '</h3>',
-              '<p>', h(product.copy), '</p>',
+            '<article class="onchain-project ', product.id, '">',
+              '<div class="onchain-media ', product.media.length > 1 ? 'onchain-media-pair' : '', '">',
+                product.media.map((media) => [
+                  media.href ? '<a href="' + h(media.href) + '" aria-label="' + h(media.label) + '">' : '<figure>',
+                    '<img src="', h(media.src), '" alt="', h(media.alt), '" width="', media.width, '" height="', media.height, '" loading="lazy">',
+                    '<span>', h(media.label), media.href ? ' ↗' : '', '</span>',
+                  media.href ? '</a>' : '</figure>',
+                ].join('')).join(''),
+              '</div>',
+              '<div class="onchain-copy">',
+                '<span class="row-number">0', index + 1, '</span>',
+                '<p class="card-label">', h(product.meta), '</p>',
+                '<h3>', h(product.title), '</h3>',
+                '<p class="onchain-headline">', h(product.headline), '</p>',
+                '<p>', h(product.copy), '</p>',
+                '<ul class="onchain-points">', product.points.map((point) => '<li>' + h(point) + '</li>').join(''), '</ul>',
+                '<div class="onchain-evidence">', product.evidence.map(([type, label, href]) => [
+                  '<span><small>', h(type), '</small>', link(h(label) + ' ↗', href), '</span>',
+                ].join('')).join(''), '</div>',
+              '</div>',
             '</article>',
           ].join('')).join(''),
         '</div>',
-        renderCase('Read the onchain-products case study', gamesCase, 'games-case'),
+        renderEditorialCase('Read the full onchain-products case study', gamesCase, 'games-case'),
       '</div>',
     '</section>',
   ].join('');
@@ -351,13 +379,13 @@ function renderProductSystems(onlyTcdf = false) {
 }
 
 function renderDurableSystems() {
-  const relay = web3Stories.find((story) => story.id === 'relay');
+  const relay = additionalEvidence.find((evidence) => evidence.id === 'relay');
   const stories = [
     {
-      meta: relay.label,
-      title: relay.title,
-      copy: relay.decision + ' ' + relay.outcome,
-      href: relay.evidence[0][2],
+      meta: 'Production debugging',
+      title: 'A transaction hash was not success.',
+      copy: 'Production traces exposed sponsored transactions that were submitted and mined but reverted out of gas. Estimate-based buffers and receipt verification made the UI report actual completion.',
+      href: relay.href,
       evidence: 'Merged PR',
     },
     {
