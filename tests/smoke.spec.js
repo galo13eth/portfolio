@@ -72,6 +72,11 @@ test('shows product and onchain evidence for all three games', async ({ page }) 
   await expect(games).toContainText('Historical production system');
   await expect(games).not.toContainText('deterministic battle simulation');
   await expect(games).not.toContainText('more than 50 game domains');
+  await expect(games.locator('#games-case')).toHaveClass(/takeait-case/);
+
+  const evidenceLinkHeights = await games.locator('.onchain-evidence a').evaluateAll((links) =>
+    links.map((link) => link.getBoundingClientRect().height));
+  expect(evidenceLinkHeights.every((height) => height >= 40)).toBe(true);
 });
 
 test('expands the Agora case across the public governance stack', async ({ page }) => {
