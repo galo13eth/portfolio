@@ -1,60 +1,70 @@
 import { test, expect } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 
-const statusUrl = 'https://raw.githubusercontent.com/galo13eth/evm-migration-lab/main/status.json';
-const validStatus = {
-  environment: 'base-sepolia',
-  chainId: '84532',
-  live: true,
-  generatedAt: '1787292636',
-  snapshotBlock: '11533768',
-  snapshotBlockHash: '0xa6472000959ac4f2d2632e418405d3b6dbc8ef3b003683c6c5b1bf2d2fc3ff2c',
-  manifestEntries: '4',
-  merkleRoot: '0xc13128996bc0d6ffe808e4715c61c31baca6c9d06211f41920136d2117c3591f',
-  claimsCompleted: '4',
-  reconciliationStatus: 'sample-consistent',
-  lastVerifiedCommit: '70905f0ce48a1ad9ddae18d1938f81872cb305c8',
-};
-
-test.beforeEach(async ({ page }) => {
-  await page.route(statusUrl, route => route.fulfill({ json: validStatus }));
-});
-
-test('renders the proof-forward hero and public work', async ({ page }) => {
+test('renders the Web3-first editorial hierarchy', async ({ page }) => {
   await page.goto('/');
-  await expect(page).toHaveTitle(/Lucas Franca/);
+  await expect(page).toHaveTitle(/Senior Web3 Product Engineer/);
   await expect(page.locator('h1')).toContainText('Lucas');
   await expect(page.locator('#scene')).toBeAttached();
-  await expect(page.locator('.proof-strip > div')).toHaveCount(4);
-  await expect(page.locator('.flagship img')).toHaveAttribute('src', 'assets/evm-migration-lab-claim-app.png');
-  await expect(page.locator('.pr-grid .work-card')).toHaveCount(6);
-  await expect(page.locator('.utility a[href="#flagship"]')).toHaveText('Work');
+  await expect(page.locator('.route-row')).toHaveCount(3);
+  await expect(page.locator('.hero-feature, .proof-strip, [data-status-state]')).toHaveCount(0);
+
+  const sectionOrder = await page.locator('main > section[id]').evaluateAll((sections) => sections.map((section) => section.id));
+  expect(sectionOrder).toEqual(['top', 'web3', 'ai-systems', 'systems', 'onchain-products', 'product-engineering', 'contact']);
 });
 
-test('renders validated live migration status', async ({ page }) => {
+test('keeps metrics contextual and removes dashboard internals', async ({ page }) => {
   await page.goto('/');
-  await expect(page.locator('[data-status-state]')).toHaveText('Live · Base Sepolia');
-  await expect(page.locator('[data-status-claims]')).toHaveText('4 / 4');
-  await expect(page.locator('[data-status-block]')).toHaveText('11,533,768');
-  await expect(page.locator('[data-status-reconciliation]')).toHaveText('Sample-consistent');
-  await expect(page.locator('[data-status-commit]')).toHaveText('70905f0c');
+  await expect(page.locator('#web3')).toContainText('90+ merged public production PRs');
+  await expect(page.locator('#onchain-products')).toContainText('approximately 16');
+  await expect(page.locator('#onchain-products')).toContainText('4,686-token');
+  await expect(page.locator('#onchain-products')).toContainText('more than 50 game domains');
+
+  const body = await page.locator('body').innerText();
+  expect(body).not.toContain('176 contracts');
+  expect(body).not.toContain('Merkle root');
+  expect(body).not.toContain('Snapshot block');
+  expect(body).not.toContain('4 / 4');
 });
 
-test('fails closed on an invalid status artifact', async ({ page }) => {
-  await page.unroute(statusUrl);
-  await page.route(statusUrl, route => route.fulfill({ json: { ...validStatus, chainId: '1' } }));
-  await page.goto('/');
-  await expect(page.locator('[data-status-state]')).toHaveText('Live artifact unavailable');
-  await expect(page.locator('[data-status-claims]')).toHaveText('—');
-  await expect(page.getByRole('link', { name: 'Repository', exact: true })).toBeVisible();
+test('renders the targeted AI route from shared content', async ({ page }) => {
+  await page.goto('/ai/');
+  await expect(page).toHaveTitle(/AI Agent Platform Engineer/);
+  await expect(page.locator('.hero .eyebrow')).toHaveText('Senior Software Engineer — AI Agent Platforms');
+  await expect(page.locator('.route-row').first()).toContainText('AI agent platforms');
+
+  const sectionOrder = await page.locator('main > section[id]').evaluateAll((sections) => sections.map((section) => section.id));
+  expect(sectionOrder).toEqual(['top', 'ai-systems', 'systems', 'web3', 'product-engineering', 'contact']);
+  await expect(page.locator('#onchain-products')).toHaveCount(0);
+  await expect(page.locator('#product-engineering')).toContainText('ChatTCDF');
 });
 
-test('retains release evidence when status loading fails', async ({ page }) => {
-  await page.unroute(statusUrl);
-  await page.route(statusUrl, route => route.abort());
+test('offers three role-specific résumé variants', async ({ page }) => {
+  await page.goto('/resume/');
+  await expect(page).toHaveTitle(/Résumés/);
+  await expect(page.locator('.resume-row')).toHaveCount(3);
+  await expect(page.getByRole('link', { name: /general résumé/i })).toHaveAttribute('href', '/resume/Lucas_Franca_Senior_Software_Engineer_Resume.pdf');
+});
+
+test('previews particle formations on pointer and keyboard focus', async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name === 'mobile', 'Touch layouts keep scroll-driven particles.');
   await page.goto('/');
-  await expect(page.locator('[data-status-state]')).toHaveText('Live artifact unavailable');
-  await expect(page.getByRole('link', { name: 'Live verification' })).toBeVisible();
+  const web3 = page.locator('[data-preview-formation="1"]');
+  const ai = page.locator('[data-preview-formation="2"]');
+
+  await web3.hover();
+  await expect(page.locator('#scene')).toHaveAttribute('data-preview-formation', '1');
+  await ai.focus();
+  await expect(page.locator('#scene')).toHaveAttribute('data-preview-formation', '2');
+  await page.locator('.brand').focus();
+  await expect(page.locator('#scene')).not.toHaveAttribute('data-preview-formation');
+});
+
+test('suppresses route previews for reduced motion', async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.goto('/');
+  await page.locator('[data-preview-formation="1"]').hover();
+  await expect(page.locator('#scene')).not.toHaveAttribute('data-preview-formation');
 });
 
 test('case studies open and close', async ({ page }) => {
@@ -64,19 +74,30 @@ test('case studies open and close', async ({ page }) => {
   await expect(first).toHaveAttribute('open', '');
 });
 
+test('core content remains readable without JavaScript', async ({ browser }, testInfo) => {
+  test.skip(testInfo.project.name === 'mobile', 'One semantic-content check is sufficient.');
+  const context = await browser.newContext({ javaScriptEnabled: false });
+  const page = await context.newPage();
+  await page.goto('http://localhost:8123/');
+  await expect(page.locator('h1')).toContainText('Lucas');
+  await expect(page.locator('#web3')).toContainText('Production Web3 systems');
+  await expect(page.locator('#ai-systems')).toContainText('AI agents as first-class system users');
+  await expect(page.locator('#systems')).toContainText('EVM Migration Lab');
+  await context.close();
+});
+
 test('mobile layout preserves reading order without horizontal overflow', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto('/');
-  const desktopLinks = page.locator('.nav-links .desktop-nav');
-  await expect(desktopLinks.first()).toBeHidden();
-  await expect(desktopLinks.last()).toBeHidden();
-  await expect(page.locator('.proof-strip > div')).toHaveCount(4);
+  await expect(page.locator('.nav-links .nav-detail').first()).toBeHidden();
   const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
   expect(overflow).toBeLessThanOrEqual(0);
 });
 
-test('has no critical accessibility violations', async ({ page }) => {
-  await page.goto('/');
-  const results = await new AxeBuilder({ page }).analyze();
-  expect(results.violations.filter(v => v.impact === 'critical')).toEqual([]);
+test('has no serious or critical accessibility violations', async ({ page }) => {
+  for (const path of ['/', '/ai/', '/resume/']) {
+    await page.goto(path);
+    const results = await new AxeBuilder({ page }).analyze();
+    expect(results.violations.filter((violation) => ['serious', 'critical'].includes(violation.impact))).toEqual([]);
+  }
 });

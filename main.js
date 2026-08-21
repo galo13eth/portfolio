@@ -78,6 +78,7 @@ const formations = [scatter(), ring(), lattice(), icosa()];
 const geo = new THREE.BufferGeometry();
 geo.setAttribute('position', new THREE.BufferAttribute(formations[0].slice(), 3));
 geo.setAttribute('aTo', new THREE.BufferAttribute(formations[0].slice(), 3));
+geo.setAttribute('aPreview', new THREE.BufferAttribute(formations[0].slice(), 3));
 const rand = new Float32Array(COUNT);
 const size = new Float32Array(COUNT);
 for (let i = 0; i < COUNT; i++) {
@@ -93,19 +94,21 @@ const material = new THREE.ShaderMaterial({
   blending: THREE.AdditiveBlending,
   uniforms: {
     uT: { value: 0 },
+    uPreviewT: { value: 0 },
     uTime: { value: 0 },
     uPx: { value: renderer.getPixelRatio() },
     uColor: { value: new THREE.Color('#93a8e8') },
   },
   vertexShader: /* glsl */ `
-    attribute vec3 aTo;
+    attribute vec3 aTo, aPreview;
     attribute float aRand, aSize;
-    uniform float uT, uTime, uPx;
+    uniform float uT, uPreviewT, uTime, uPx;
     varying float vA;
     void main() {
       float t = clamp((uT - aRand * 0.35) / 0.65, 0.0, 1.0);
       t = t * t * (3.0 - 2.0 * t);
       vec3 p = mix(position, aTo, t);
+      p = mix(p, aPreview, smoothstep(0.0, 1.0, uPreviewT));
       p += 0.07 * vec3(sin(uTime * 0.6 + aRand * 31.0),
                        sin(uTime * 0.5 + aRand * 57.0),
                        sin(uTime * 0.7 + aRand * 73.0));
@@ -147,6 +150,7 @@ scene.add(group);
 
 // scroll → formation keyframes
 const sections = [...document.querySelectorAll('[data-formation]')];
+const previewRows = [...document.querySelectorAll('[data-preview-formation]')];
 let keys = [];
 function measure() {
   keys = sections.map(el => {
@@ -168,6 +172,10 @@ function rebuffer(fi, ti) {
 }
 
 const colA = new THREE.Color();
+const previewColor = new THREE.Color('#93a8e8');
+let previewFormation = 0;
+let previewTarget = 0;
+let previewValue = 0;
 function updateScroll() {
   const p = scrollY + innerHeight / 2;
   let i = 0;
@@ -183,9 +191,12 @@ function updateScroll() {
     rebuffer(segFrom, segTo);
   }
   material.uniforms.uT.value = t;
-  material.uniforms.uColor.value.copy(colA.copy(keys[i].color).lerp(next.color, t));
+  material.uniforms.uColor.value
+    .copy(colA.copy(keys[i].color).lerp(next.color, t))
+    .lerp(previewColor, previewValue);
 
-  const w0 = (segFrom === 0 ? 1 - t : 0) + (segTo === 0 ? t : 0);
+  const scrollW0 = (segFrom === 0 ? 1 - t : 0) + (segTo === 0 ? t : 0);
+  const w0 = scrollW0 * (1 - previewValue) + (previewFormation === 0 ? previewValue : 0);
   lineMat.opacity = 0.22 * w0;
   lines.visible = w0 > 0.02;
 
@@ -204,6 +215,31 @@ document.fonts?.ready.then(measure);
 document.querySelectorAll('details').forEach(d => d.addEventListener('toggle', measure));
 resize();
 
+if (!reduced) {
+  const activatePreview = (row) => {
+    previewFormation = Number(row.dataset.previewFormation);
+    previewColor.set(row.dataset.previewAccent);
+    geo.getAttribute('aPreview').copyArray(formations[previewFormation]);
+    geo.getAttribute('aPreview').needsUpdate = true;
+    previewTarget = 1;
+    canvas.dataset.previewFormation = String(previewFormation);
+  };
+  const clearPreview = (row) => {
+    if (document.activeElement === row || row.matches(':hover')) return;
+    previewTarget = 0;
+    delete canvas.dataset.previewFormation;
+  };
+
+  previewRows.forEach((row) => {
+    row.addEventListener('focus', () => activatePreview(row));
+    row.addEventListener('blur', () => clearPreview(row));
+    if (matchMedia('(hover: hover)').matches) {
+      row.addEventListener('pointerenter', () => activatePreview(row));
+      row.addEventListener('pointerleave', () => clearPreview(row));
+    }
+  });
+}
+
 const mouse = { x: 0, y: 0 };
 if (!reduced) addEventListener('pointermove', e => {
   mouse.x = (e.clientX / innerWidth) * 2 - 1;
@@ -213,6 +249,9 @@ if (!reduced) addEventListener('pointermove', e => {
 const clock = new THREE.Clock();
 function frame() {
   const el = clock.getElapsedTime();
+  previewValue += (previewTarget - previewValue) * 0.08;
+  if (Math.abs(previewTarget - previewValue) < 0.001) previewValue = previewTarget;
+  material.uniforms.uPreviewT.value = previewValue;
   const globalT = updateScroll();
   if (!reduced) material.uniforms.uTime.value = el;
   group.rotation.y = globalT * 1.4 + (reduced ? 0.3 : el * 0.03);
