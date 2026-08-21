@@ -279,7 +279,7 @@ function renderAiSystems(page) {
 
 function renderMigration() {
   return [
-    '<section id="systems" class="content-section s-systems" data-formation="0" data-accent="#93a8e8">',
+    '<section id="systems" class="content-section s-systems" data-formation="4" data-accent="#93a8e8">',
       '<div class="shell">',
         '<header class="section-heading">',
           '<p class="eyebrow">Original open-source systems project · Rust, Solidity, React</p>',
@@ -474,7 +474,7 @@ function renderContact() {
             link('GitHub', links.github), link('LinkedIn', links.linkedin), link('Résumé versions', '/resume/'),
           '</nav>',
         '</div>',
-        '<footer>The field behind this page is one set of particles reorganizing into a constellation, governance quorum, execution lattice, and game world.</footer>',
+        '<footer>The field behind this page is one set of particles reorganizing into a constellation, governance quorum, execution lattice, migration path, and game world.</footer>',
       '</div>',
     '</section>',
   ].join('');

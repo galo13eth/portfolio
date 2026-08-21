@@ -160,13 +160,23 @@ test('previews particle formations on pointer and keyboard focus', async ({ page
   await page.goto('/');
   const web3 = page.locator('[data-preview-formation="1"]');
   const ai = page.locator('[data-preview-formation="2"]');
+  const systems = page.locator('[data-preview-formation="4"]');
 
   await web3.hover();
   await expect(page.locator('#scene')).toHaveAttribute('data-preview-formation', '1');
   await ai.focus();
   await expect(page.locator('#scene')).toHaveAttribute('data-preview-formation', '2');
+  await systems.hover();
+  await expect(page.locator('#scene')).toHaveAttribute('data-preview-formation', '4');
   await page.locator('.brand').focus();
   await expect(page.locator('#scene')).not.toHaveAttribute('data-preview-formation');
+});
+
+test('gives EVM Migration Lab its own particle formation', async ({ page }) => {
+  await page.goto('/');
+  await expect(page.locator('#top')).toHaveAttribute('data-formation', '0');
+  await expect(page.locator('#systems')).toHaveAttribute('data-formation', '4');
+  await expect(page.locator('[data-preview-formation="4"]')).toContainText('EVM Migration Lab');
 });
 
 test('suppresses route previews for reduced motion', async ({ page }) => {

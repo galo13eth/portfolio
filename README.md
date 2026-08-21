@@ -10,8 +10,9 @@ generates the committed pages from one shared content source.
 
 One particle field runs behind the whole page and reorganizes as you scroll
 into the shape of each career chapter — constellation (hero), quorum ring
-(governance), execution lattice (agent platform), d20 wireframe (onchain
-games) — then back to the constellation.
+(governance), execution lattice (agent platform), snapshot-to-claim graph
+(EVM Migration Lab), d20 wireframe (onchain games) — then back to the
+constellation.
 
 ## Run
 
