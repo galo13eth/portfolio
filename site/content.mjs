@@ -328,7 +328,7 @@ export const migrationProofs = [
 export const onchainProducts = [
   {
     id: 'sekai',
-    meta: 'Live product · 2024–2025 · part-time lead',
+    meta: 'Historical production game · 2024–2025 · part-time lead',
     title: 'Sekai Glory',
     headline: 'A mobile Web3 card game across contracts, indexed state, and real-time play.',
     copy: 'I owned the product path from an approximately 16-contract application and indexed tournament state through wallet UX, live matchmaking, recovery flows, and the Blast-to-Ronin migration.',
@@ -341,31 +341,30 @@ export const onchainProducts = [
       { src: '/assets/sekai-glory-gameplay.webp', alt: 'Sekai Glory mobile card battle in progress', width: 720, height: 1030, href: 'https://x.com/SekaiGlory/status/1887676591003595253', label: 'Official gameplay demo' },
     ],
     evidence: [
-      ['Official product', 'Sekai Glory', 'https://www.sekaiglory.com/en'],
-      ['Official gameplay demo', '2:14 mobile battle flow', 'https://x.com/SekaiGlory/status/1887676591003595253'],
+      ['Historical product', 'Sekai Glory', 'https://www.sekaiglory.com/en'],
+      ['Official gameplay archive', '2:14 mobile battle flow', 'https://x.com/SekaiGlory/status/1887676591003595253'],
       ['Official documentation', 'Game and Ronin overview', 'https://rng-1.gitbook.io/sekaiglory'],
       ['Historical collection', 'Sekai Glory TCG on Blast', 'https://opensea.io/item/blast/0x10fe37bac405b209f83ff523fb8d00c0c3f508a8/303977'],
     ],
   },
   {
     id: 'lifeverse',
-    meta: 'Live ecosystem · 2023–present · DAO council',
-    title: 'Lifeverse / Colosseum of Phanes',
-    headline: 'Game state spanning onchain assets and seasonal application logic.',
-    copy: 'I built product and data workflows around 4,686 Arbitrum Imbued Souls: registration, battles, missions, traits, rewards, and the asset pipeline that made every final character inspectable.',
+    meta: 'DAO governance and game development · 2023–present',
+    title: 'Lifeverse DAO / Colosseum of Phanes',
+    headline: 'Strategy, treasury stewardship, and product delivery for a gaming DAO.',
+    copy: 'As a council member, I helped decide where treasury and engineering effort should go, stopped work that was not meeting the DAO’s quality or delivery bar, and contributed directly to Colosseum of Phanes.',
     points: [
-      'Server-authoritative seasonal battle workflows with recorded odds, outcomes, and transactional duplicate-action protection.',
-      'Integration with onchain Soul assets and asynchronous evolution and randomness workflows.',
-      'A byte-stable 4,686-asset visual and data pipeline delivered into the public collection and ecosystem.',
+      'Stopped Arcane development after reviewing a year-long cycle that remained too slow and produced work below the required quality bar, preventing further waste of DAO resources.',
+      'Built Colosseum of Phanes game and data workflows across registration, battles, missions, traits, rewards, and transactional duplicate-action protection.',
+      'Helped direct DAO strategy and NFT-holder distributions through a verified ERC-20 claim contract.',
     ],
     media: [
       { src: '/assets/lifeverse-ecosystem.webp', alt: 'Lifeverse Web3 gaming ecosystem homepage on Arbitrum', width: 1280, height: 800, href: 'https://lifeverse.gg/', label: 'Official ecosystem' },
     ],
     evidence: [
-      ['Official ecosystem', 'Lifeverse', 'https://lifeverse.gg/'],
+      ['Official ecosystem', 'Lifeverse DAO', 'https://lifeverse.gg/'],
       ['Official game documentation', 'Colosseum of Phanes', 'https://docs.lifeverse.gg/lifeverse-games/lifeverse-studio/colosseum-of-phanes'],
-      ['Onchain collection', '4,686 Imbued Souls', 'https://opensea.io/collection/imbuedsoul'],
-      ['Verified contract', 'SeedEvolution · 10k+ transactions', 'https://arbitrum.blockscout.com/address/0x3e455c3321Ef4861DD8492d7FC099190a846458a'],
+      ['Verified distribution contract', 'NFT-holder ERC-20 claims · 738 transactions', 'https://arbiscan.io/address/0x48f26c596a9a44f1d16eeb521d0a20fd1d86f595'],
     ],
   },
   {
@@ -375,17 +374,20 @@ export const onchainProducts = [
     headline: 'Wallet UX for a transaction-heavy onchain strategy game.',
     copy: 'I owned full-stack product integration across battle, equipment, missions, construction, resources, crafting, and ANIMA staking—reconciling contract writes, indexed state, local projections, and transaction lifecycle UX.',
     points: [
-      'Battle and equipment workflows over a verified contract that had processed more than 185,000 transactions by August 2026.',
+      'Battle, crafting, and progression workflows across four verified contracts with more than 277,000 combined transactions by August 2026.',
       'Data-heavy resource, productivity, refinery, staking, and reward interfaces.',
+      'Batched transaction payloads when complete game actions exceeded practical single-transaction data limits, while keeping progress and failures understandable in the UI.',
       'Synchronization among contract writes, three subgraphs, local simulations, and failure-aware wallet UX.',
     ],
     media: [
-      { src: '/assets/realm-anima-staking.webp', alt: 'Realm ANIMA staking and rewards interface', width: 814, height: 798, label: 'Historical ANIMA staking interface' },
-      { src: '/assets/realm-boost-rewards.webp', alt: 'Realm boost rewards browser with productivity and ANIMA staking data', width: 1100, height: 1359, label: 'Historical realm productivity interface' },
+      { src: '/assets/realm-anima-staking.webp', alt: 'Realm ANIMA staking and rewards interface', width: 814, height: 798, label: 'Historical ANIMA staking interface', enlarge: true },
+      { src: '/assets/realm-boost-rewards.webp', alt: 'Realm boost rewards browser with productivity and ANIMA staking data', width: 1100, height: 1359, label: 'Historical realm productivity interface', enlarge: true },
     ],
     evidence: [
-      ['Verified contract', 'BattleVersusV3 · 185k+ transactions', 'https://arbitrum.blockscout.com/address/0x2cfcaff3289142E79173B856293D6128B6bD05c6'],
-      ['Onchain transaction', 'Decoded battle and ANIMA reward', 'https://www.arbiscan.io/tx/0x850c7a5224f60f640ff9ce4582cd897fcf1d95360406969ac4de42b5b863baca'],
+      ['Verified battle contract', 'BattleVersusV3 · 185k+ transactions', 'https://arbiscan.io/address/0x2cfcaff3289142E79173B856293D6128B6bD05c6'],
+      ['Verified battle contract', 'BattleVersusV2 · 56k+ transactions', 'https://arbiscan.io/address/0x7abf1cae387a2dc7f7876dc3f2861e6c0fc9cd54'],
+      ['Verified crafting contract', 'Crafting · 25k+ transactions', 'https://arbiscan.io/address/0xb8d64eb58ee358f5e76465bb702f60a04d1f2850'],
+      ['Verified progression contract', 'Transcendence · 9.5k+ transactions', 'https://arbiscan.io/address/0x74bfd46a3410d634d6a2361ab8e9cb6cec83c0e8'],
       ['Token', 'ANIMA on Arbitrum', 'https://arbitrum.blockscout.com/token/0xcCd05A0fcfc1380e9Da27862Adb2198E58e0D66f'],
       ['Onchain collection', '5,015 Realm NFTs', 'https://opensea.io/collection/rlmverse'],
     ],
@@ -418,18 +420,18 @@ export const gamesCase = {
     },
     {
       number: '03',
-      title: 'Real-time systems live beside the chain.',
+      title: 'DAO stewardship includes stopping work.',
       copy: [
-        'Matchmaking, queues, delivery acknowledgements, recovery, notifications, and seasonal progression cannot wait for a block explorer refresh.',
-        'Sekai used atomic match creation, persisted queue state, acknowledgements, lock recovery, and health monitoring; Lifeverse used transactional server-owned battle and reward workflows around the onchain assets.',
+        'After joining the Lifeverse council, I reviewed Arcane against its year-long development cycle, delivery pace, and quality. Continuing would have spent more DAO resources without a credible path to the required result, so I argued to stop development.',
+        'That was a product decision as much as a technical one: protect the treasury, redirect effort toward work with a clearer path to players, and contribute directly to Colosseum of Phanes and NFT-holder distributions.',
       ],
     },
     {
       number: '04',
       title: 'Transaction-heavy gameplay changes product design.',
       copy: [
-        'Realm treated battles, equipment, missions, construction, crafting, resources, and staking as onchain state transitions—not decorative mints.',
-        'The application had to coordinate writes, three subgraphs, local projections, gas and receipt behavior, and data-dense resource interfaces while remaining understandable to a player.',
+        'Realm treated battles, equipment, missions, construction, crafting, resources, staking, and level progression as onchain state transitions—not decorative mints. Four verified gameplay contracts alone processed more than 277,000 transactions by August 2026.',
+        'Some complete actions exceeded practical single-transaction data limits, so I split payloads into batches and made partial progress and failures legible. The application also coordinated three subgraphs, local projections, gas and receipt behavior, and data-dense resource interfaces.',
       ],
     },
     {
@@ -444,7 +446,7 @@ export const gamesCase = {
       number: '06',
       title: 'Ownership differed by project.',
       copy: [
-        'Sekai and Lifeverse included contract, product, data, and operational work. Realm’s strongest attributable scope is the wallet-connected application and integration layer over a large existing protocol.',
+        'Sekai included contract, product, data, and operational work. At Lifeverse, my scope combined DAO council decisions, treasury stewardship, NFT-holder distributions, and direct Colosseum of Phanes development. Realm’s strongest attributable scope is the wallet-connected application and integration layer over a large existing protocol.',
         'The public evidence below distinguishes official products, product media, verified contracts, transactions, tokens, and collections instead of treating each link as equivalent proof of authorship.',
       ],
     },

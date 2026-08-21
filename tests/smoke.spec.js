@@ -51,8 +51,7 @@ test('keeps metrics contextual and removes dashboard internals', async ({ page }
   await page.goto('/');
   await expect(page.locator('#web3')).toContainText('90+ merged public production PRs');
   await expect(page.locator('#onchain-products')).toContainText('approximately 16');
-  await expect(page.locator('#onchain-products')).toContainText('4,686 Arbitrum Imbued Souls');
-  await expect(page.locator('#onchain-products')).toContainText('more than 185,000 transactions');
+  await expect(page.locator('#onchain-products')).toContainText('more than 277,000 combined transactions');
 
   const body = await page.locator('body').innerText();
   expect(body).not.toContain('176 contracts');
@@ -64,11 +63,18 @@ test('keeps metrics contextual and removes dashboard internals', async ({ page }
 test('shows product and onchain evidence for all three games', async ({ page }) => {
   await page.goto('/');
   const games = page.locator('#onchain-products');
+  await expect(games.locator('h2')).toHaveText('Onchain products under real load');
   await expect(games.locator('.onchain-project')).toHaveCount(3);
   await expect(games.locator('.onchain-media img')).toHaveCount(4);
-  await expect(games).toContainText('Official gameplay demo');
-  await expect(games).toContainText('4,686 Imbued Souls');
+  await expect(games).toContainText('Historical production game');
+  await expect(games).toContainText('Official gameplay archive');
+  await expect(games).toContainText('stopped work that was not meeting the DAO’s quality or delivery bar');
+  await expect(games).toContainText('NFT-holder ERC-20 claims · 738 transactions');
   await expect(games).toContainText('BattleVersusV3 · 185k+ transactions');
+  await expect(games).toContainText('BattleVersusV2 · 56k+ transactions');
+  await expect(games).toContainText('Crafting · 25k+ transactions');
+  await expect(games).toContainText('Transcendence · 9.5k+ transactions');
+  await expect(games).toContainText('Batched transaction payloads');
   await expect(games).toContainText('Historical production system');
   await expect(games).not.toContainText('deterministic battle simulation');
   await expect(games).not.toContainText('more than 50 game domains');
@@ -77,6 +83,21 @@ test('shows product and onchain evidence for all three games', async ({ page }) 
   const evidenceLinkHeights = await games.locator('.onchain-evidence a').evaluateAll((links) =>
     links.map((link) => link.getBoundingClientRect().height));
   expect(evidenceLinkHeights.every((height) => height >= 40)).toBe(true);
+});
+
+test('opens and closes enlarged Realm evidence images', async ({ page }) => {
+  await page.goto('/');
+  const buttons = page.locator('.onchain-project.realm [data-lightbox-src]');
+  const dialog = page.locator('#realm-lightbox');
+  await expect(buttons).toHaveCount(2);
+
+  await buttons.nth(1).click();
+  await expect(dialog).toHaveAttribute('open', '');
+  await expect(dialog.locator('img')).toHaveAttribute('src', '/assets/realm-boost-rewards.webp');
+  await expect(dialog.locator('#realm-lightbox-caption')).toHaveText('Historical realm productivity interface');
+
+  await dialog.locator('.realm-lightbox-image').click();
+  await expect(dialog).not.toHaveAttribute('open', '');
 });
 
 test('expands the Agora case across the public governance stack', async ({ page }) => {
