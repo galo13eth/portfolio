@@ -74,7 +74,7 @@ function renderHero(kind) {
         '<nav id="work" class="route-index" aria-label="Selected engineering routes">',
           '<p class="route-label">Selected engineering</p>',
           hero.routeOrder.map((key) => {
-            const route = engineeringRoutes[key];
+            const route = { ...engineeringRoutes[key], ...hero.routeOverrides?.[key] };
             return [
               '<a class="route-row" href="', route.href, '" data-preview-formation="', route.formation,
                 '" data-preview-accent="', route.accent, '">',
@@ -201,12 +201,12 @@ function renderTakeaitDiagram() {
       '<h3 id="takeait-diagram-title">From ticket to reviewed pull request.</h3>',
       '<div class="diagram-node">Ticket + ordered assignment</div>',
       '<span class="diagram-arrow" aria-hidden="true">↓ atomic claim</span>',
-      '<div class="diagram-node">Host-wide runner slot</div>',
-      '<span class="diagram-arrow" aria-hidden="true">↓ kernel-released lease</span>',
-      '<div class="diagram-node accent-node">Workspace + profile snapshot</div>',
+      '<div class="diagram-node">Bounded runner capacity</div>',
+      '<span class="diagram-arrow" aria-hidden="true">↓ isolated execution</span>',
+      '<div class="diagram-node accent-node">Workspace + versioned profile</div>',
       '<span class="diagram-arrow" aria-hidden="true">↓</span>',
       '<div class="diagram-node">Coding harness + ticket watcher</div>',
-      '<span class="diagram-arrow" aria-hidden="true">↓ pinned completion gate</span>',
+      '<span class="diagram-arrow" aria-hidden="true">↓ completion policy</span>',
       '<div class="diagram-node">Reviewed PR + provenance</div>',
       '<span class="diagram-return" aria-hidden="true">Human comment · question · pause · redirect · review ↑</span>',
       '<figcaption id="takeait-diagram-caption">The control plane coordinates work; private, poll-only Go runners own execution and recovery.</figcaption>',
@@ -493,7 +493,7 @@ function renderResumePage() {
               '<article class="resume-row">',
                 '<span class="row-number">0', index + 1, '</span>',
                 '<div><p class="card-label">', h(resume.label), '</p><h2>', h(resume.title), '</h2><p>', h(resume.copy), '</p></div>',
-                link(h(resume.action) + ' ↓', resume.href, 'button secondary'),
+                link(h(resume.action) + ' ↗', resume.href, 'button secondary'),
               '</article>',
             ].join('')).join(''),
           '</div>',

@@ -38,7 +38,7 @@ test('keeps architecture context visible and cases full width', async ({ page })
   await expect(page.locator('#ai-systems .architecture-intro')).toContainText('How a ticket becomes a pull request');
   await expect(page.locator('#ai-systems #takeait-diagram-title')).toHaveText('From ticket to reviewed pull request.');
   await expect(page.locator('#ai-systems .takeait-lifecycle > div')).toHaveCount(4);
-  await expect(page.locator('#ai-systems .takeait-lifecycle')).toContainText('runner-owned repository check');
+  await expect(page.locator('#ai-systems .takeait-lifecycle')).toContainText('runner-owned completion policy');
 
   for (const section of ['#web3', '#ai-systems']) {
     const order = await page.locator(`${section} .shell > .architecture-layout, ${section} .shell > .proof-columns, ${section} .shell > details.case`)
@@ -144,7 +144,7 @@ test('offers three role-specific résumé variants', async ({ page }) => {
     'For AI-agent platform roles',
     'For backend and full-stack roles',
   ]);
-  await expect(page.getByRole('link', { name: /general résumé/i })).toHaveAttribute('href', '/resume/Lucas_Franca_Senior_Software_Engineer_Resume.pdf');
+  await expect(page.getByRole('link', { name: /open backend\/full-stack résumé/i })).toHaveAttribute('href', '/resume/Lucas_Franca_Senior_Software_Engineer_Resume.pdf');
 });
 
 test('presents engineering range as parallel capabilities', async ({ page }) => {
@@ -193,17 +193,34 @@ test('case studies open and close', async ({ page }) => {
   await expect(first).toHaveAttribute('open', '');
 });
 
-test('expands the TakeAIt architecture into the complete durable-work lifecycle', async ({ page }) => {
+test('expands the public TakeAIt architecture without internal implementation details', async ({ page }) => {
   await page.goto('/');
   const caseStudy = page.locator('#takeait-case');
   await caseStudy.locator('summary').click();
   await expect(caseStudy).toHaveAttribute('open', '');
-  await expect(caseStudy.locator('.takeait-case-chapter')).toHaveCount(8);
-  await expect(caseStudy).toContainText('The ticket outlives the model turn.');
-  await expect(caseStudy).toContainText('.tai/WORKFLOW.md');
-  await expect(caseStudy).toContainText('Recovery runs before any new work is claimed.');
-  await expect(caseStudy).toContainText('every finding is fixed or rebutted');
-  await expect(caseStudy).toContainText('33,000 lines of non-test code');
+  await expect(caseStudy.locator('.takeait-case-chapter')).toHaveCount(5);
+  await expect(caseStudy).toContainText('Tickets outlive model turns.');
+  await expect(caseStudy).toContainText('Atomic claiming and isolated execution.');
+  await expect(caseStudy).toContainText('Durable recovery.');
+  await expect(caseStudy).toContainText('Human intervention and review.');
+  await expect(caseStudy).toContainText('Operational use and outcomes.');
+  await expect(caseStudy).not.toContainText('.tai/WORKFLOW.md');
+  await expect(caseStudy).not.toContainText('33,000 lines');
+});
+
+test('AI route uses page-specific Web3 positioning', async ({ page }) => {
+  await page.goto('/ai/');
+  const web3Route = page.locator('.route-row[href="#web3"]');
+  await expect(web3Route).toContainText('Reliability from production Web3');
+  await expect(web3Route).toContainText('Recovery, concurrency, real-time state, and irreversible execution');
+});
+
+test('résumé actions describe opening PDFs', async ({ page }) => {
+  await page.goto('/resume/');
+  await expect(page.locator('.resume-list')).toContainText('Open Web3 résumé');
+  await expect(page.locator('.resume-list')).toContainText('Open AI/platform résumé');
+  await expect(page.locator('.resume-list')).toContainText('Open backend/full-stack résumé');
+  await expect(page.locator('.resume-list')).not.toContainText('Download');
 });
 
 test('core content remains readable without JavaScript', async ({ browser }, testInfo) => {
