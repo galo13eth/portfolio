@@ -93,7 +93,7 @@ function renderHero(kind) {
 
 function renderEditorialCase(summary, content, id) {
   return [
-    '<details id="', id, '" class="case surface">',
+    '<details id="', id, '" class="case takeait-case surface">',
       '<summary>', h(summary), '</summary>',
       '<div class="takeait-case-lede">',
         '<p class="card-label">', h(content.eyebrow), '</p>',
@@ -324,6 +324,13 @@ function renderOnchain() {
         '<div class="onchain-projects">',
           onchainProducts.map((product, index) => [
             '<article class="onchain-project ', product.id, '">',
+              '<div class="onchain-copy">',
+                '<div class="onchain-meta"><span class="row-number">0', index + 1, '</span><p class="card-label">', h(product.meta), '</p></div>',
+                '<h3>', h(product.title), '</h3>',
+                '<p class="onchain-headline">', h(product.headline), '</p>',
+                '<p>', h(product.copy), '</p>',
+                '<ul class="onchain-points">', product.points.map((point) => '<li>' + h(point) + '</li>').join(''), '</ul>',
+              '</div>',
               '<div class="onchain-media ', product.media.length > 1 ? 'onchain-media-pair' : '', '">',
                 product.media.map((media) => [
                   media.href ? '<a href="' + h(media.href) + '" aria-label="' + h(media.label) + '">' : '<figure>',
@@ -332,17 +339,9 @@ function renderOnchain() {
                   media.href ? '</a>' : '</figure>',
                 ].join('')).join(''),
               '</div>',
-              '<div class="onchain-copy">',
-                '<span class="row-number">0', index + 1, '</span>',
-                '<p class="card-label">', h(product.meta), '</p>',
-                '<h3>', h(product.title), '</h3>',
-                '<p class="onchain-headline">', h(product.headline), '</p>',
-                '<p>', h(product.copy), '</p>',
-                '<ul class="onchain-points">', product.points.map((point) => '<li>' + h(point) + '</li>').join(''), '</ul>',
-                '<div class="onchain-evidence">', product.evidence.map(([type, label, href]) => [
-                  '<span><small>', h(type), '</small>', link(h(label) + ' ↗', href), '</span>',
-                ].join('')).join(''), '</div>',
-              '</div>',
+              '<nav class="onchain-evidence" aria-label="', h(product.title), ' evidence">', product.evidence.map(([type, label, href]) => [
+                '<a href="', h(href), '"><small>', h(type), '</small><strong>', h(label), ' <span aria-hidden="true">↗</span></strong></a>',
+              ].join('')).join(''), '</nav>',
             '</article>',
           ].join('')).join(''),
         '</div>',

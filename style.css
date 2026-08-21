@@ -617,33 +617,51 @@ a:hover { color: var(--a); text-decoration-color: var(--a); }
   font-size: 0.84rem;
   font-weight: 600;
 }
-.onchain-projects { border-bottom: 1px solid var(--line); }
+.onchain-projects { display: grid; gap: 1rem; }
 .onchain-project {
-  padding-block: clamp(2.5rem, 6vw, 5rem);
-  border-top: 1px solid var(--line);
+  padding: clamp(1.35rem, 2.8vw, 2rem);
+  border-radius: 14px;
   display: grid;
-  grid-template-columns: minmax(300px, 0.9fr) minmax(0, 1.1fr);
-  gap: clamp(2rem, 6vw, 5rem);
-  align-items: center;
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 350px);
+  grid-template-areas: "copy media" "evidence evidence";
+  gap: clamp(1.4rem, 3vw, 2.5rem);
+  align-items: start;
+  background: rgba(11, 17, 31, 0.58);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.075),
+    0 18px 50px rgba(0, 0, 0, 0.16);
 }
-.onchain-project:nth-child(even) .onchain-media { order: 2; }
+.onchain-copy { grid-area: copy; }
+.onchain-meta {
+  margin-bottom: 0.55rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  align-items: baseline;
+}
+.onchain-meta .card-label { margin: 0; }
 .onchain-media {
+  grid-area: media;
+  width: 100%;
+  height: 16.5rem;
+  max-width: 350px;
   min-width: 0;
   display: grid;
   gap: 0.65rem;
+  justify-self: end;
 }
-.onchain-project.sekai .onchain-media { width: min(100%, 23rem); justify-self: center; }
 .onchain-media-pair { grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.72fr); align-items: stretch; }
 .onchain-media > a,
 .onchain-media > figure {
   position: relative;
   min-height: 2.5rem;
   overflow: hidden;
-  border-radius: 12px;
+  border-radius: 10px;
   display: block;
   background: rgba(255, 255, 255, 0.025);
   outline: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.22);
+  outline-offset: -1px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
   text-decoration: none;
 }
 .onchain-media img {
@@ -653,8 +671,8 @@ a:hover { color: var(--a); text-decoration-color: var(--a); }
   object-fit: cover;
   object-position: top center;
 }
-.onchain-media-pair > :first-child { aspect-ratio: 1 / 1; }
-.onchain-media-pair > :last-child { aspect-ratio: 0.72 / 1; }
+.onchain-project.sekai .onchain-media img { object-position: center 37%; }
+.onchain-project.lifeverse .onchain-media img { object-position: center 32%; }
 .onchain-media > a > span,
 .onchain-media > figure > span {
   position: absolute;
@@ -672,28 +690,51 @@ a:hover { color: var(--a); text-decoration-color: var(--a); }
   transition-duration: 0.22s;
   transition-timing-function: cubic-bezier(0.2, 0, 0, 1);
 }
-.onchain-copy > .row-number { display: block; margin-bottom: 0.55rem; }
-.onchain-copy h3 { margin-block: 0.45rem 0.9rem; font-size: clamp(1.65rem, 3vw, 2.4rem); }
+.onchain-copy h3 { margin-bottom: 0.75rem; font-size: clamp(1.55rem, 2.6vw, 2.15rem); }
 .onchain-headline { max-width: 38ch; color: var(--ink); font-weight: 600; }
 .onchain-headline + p { max-width: 59ch; margin-top: 0.8rem; }
-.onchain-points { margin-top: 1.25rem; padding-left: 1.1rem; }
-.onchain-points li { margin-top: 0.48rem; font-size: 0.9rem; line-height: 1.55; }
-.onchain-evidence {
-  margin-top: 1.4rem;
-  padding-top: 1rem;
+.onchain-points {
+  max-width: 64ch;
+  margin-top: 1.15rem;
+  padding: 0.85rem 0 0 1.1rem;
   border-top: 1px solid var(--line);
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0.7rem 1.2rem;
 }
-.onchain-evidence > span { display: grid; gap: 0.12rem; }
+.onchain-points li { margin-top: 0.4rem; font-size: 0.88rem; line-height: 1.5; }
+.onchain-evidence {
+  grid-area: evidence;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.6rem;
+}
+.onchain-evidence > a {
+  min-height: 4.35rem;
+  padding: 0.68rem 0.78rem;
+  border-radius: 9px;
+  display: grid;
+  align-content: center;
+  gap: 0.14rem;
+  background: rgba(255, 255, 255, 0.025);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.075);
+  color: var(--muted);
+  text-decoration: none;
+  transition-property: color, background-color, box-shadow, transform;
+  transition-duration: 0.18s;
+  transition-timing-function: cubic-bezier(0.2, 0, 0, 1);
+}
+.onchain-evidence > a:hover,
+.onchain-evidence > a:focus-visible {
+  background: rgba(255, 255, 255, 0.045);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--a) 35%, transparent);
+  color: var(--ink);
+}
+.onchain-evidence > a:active { transform: scale(0.96); }
 .onchain-evidence small {
   color: var(--a);
   font: 500 0.59rem/1.5 var(--mono);
   text-transform: uppercase;
   letter-spacing: 0.08em;
 }
-.onchain-evidence a { width: fit-content; font-size: 0.78rem; line-height: 1.45; }
+.onchain-evidence strong { font-size: 0.78rem; line-height: 1.4; }
 #games-case { margin-top: 1rem; }
 
 .capability-grid {
@@ -756,6 +797,12 @@ a:hover { color: var(--a); text-decoration-color: var(--a); }
   .architecture-layout,
   .flagship-layout,
   .contact-layout { grid-template-columns: 1fr; }
+  .onchain-project {
+    grid-template-columns: 1fr;
+    grid-template-areas: "copy" "media" "evidence";
+  }
+  .onchain-media { max-width: 32rem; justify-self: start; }
+  .onchain-evidence { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .hero-grid { gap: 3rem; }
   .hero-copy { max-width: 48rem; }
   .route-index,
@@ -788,9 +835,6 @@ a:hover { color: var(--a); text-decoration-color: var(--a); }
   .diagram-inputs { grid-template-columns: 1fr; }
   .additional-evidence li { grid-template-columns: 1fr; gap: 0.15rem; }
   .case-evidence li { grid-template-columns: 1fr; gap: 0.2rem; }
-  .onchain-project { grid-template-columns: 1fr; }
-  .onchain-project:nth-child(even) .onchain-media { order: 0; }
-  .onchain-media { max-width: 42rem; }
   .onchain-evidence { grid-template-columns: 1fr; }
   .editorial-row {
     grid-template-columns: 2rem 1fr;
@@ -810,6 +854,7 @@ a:hover { color: var(--a); text-decoration-color: var(--a); }
   .route-row { grid-template-columns: 1.8rem 1fr auto; gap: 0.65rem; }
   .project-links { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .project-links a { align-items: start; }
+  .onchain-media { height: 14rem; }
   .onchain-media-pair { grid-template-columns: 1fr 0.72fr; }
 }
 
