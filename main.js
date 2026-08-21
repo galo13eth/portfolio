@@ -1,5 +1,26 @@
 import * as THREE from 'three';
 
+const lightbox = document.getElementById('realm-lightbox');
+if (lightbox) {
+  const image = lightbox.querySelector('img');
+  const caption = lightbox.querySelector('#realm-lightbox-caption');
+
+  document.querySelectorAll('[data-lightbox-src]').forEach(button => {
+    button.addEventListener('click', () => {
+      image.src = button.dataset.lightboxSrc;
+      image.alt = button.dataset.lightboxAlt;
+      caption.textContent = button.dataset.lightboxLabel;
+      lightbox.showModal();
+    });
+  });
+
+  lightbox.querySelectorAll('[data-lightbox-close]').forEach(button =>
+    button.addEventListener('click', () => lightbox.close()));
+  lightbox.addEventListener('click', event => {
+    if (event.target === lightbox) lightbox.close();
+  });
+}
+
 const canvas = document.getElementById('scene');
 let renderer;
 try {
