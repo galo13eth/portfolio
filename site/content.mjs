@@ -76,54 +76,58 @@ export const web3Stories = [
   {
     id: 'wallets',
     label: 'Wallet architecture',
-    title: 'Embedded wallets without breaking existing flows.',
-    problem: 'One tenant needed email and social login while every other tenant relied on ConnectKit, Safe, and gasless EIP-712 voting.',
-    decision: 'Introduce Privy as a wagmi connector behind a per-tenant flag.',
-    outcome: 'A new onboarding path with no regression to existing wallet and relayer flows.',
-    stack: 'wagmi · Privy · SIWE · EIP-712',
-    href: 'https://github.com/voteagora/agora-next/pull/1567',
-    evidence: 'agora-next#1567',
+    title: 'One governance product across EOAs, Safes, and embedded wallets.',
+    problem: 'Three fundamentally different account models needed to use the same proposal, voting, delegation, and transaction flows.',
+    decision: 'Build account-aware wallet flows: automatic Safe detection and signer progress, reusable SIWE sessions, and tenant-gated Privy integration that reused the existing wagmi and EIP-712 infrastructure.',
+    outcome: 'Multisig and email/social users gained first-class workflows without breaking the wallet and relay behavior existing tenants depended on.',
+    stack: 'Safe · Privy · wagmi · SIWE · EIP-712',
+    evidence: [
+      ['Product write-up', 'Safe Wallet Improvements', 'https://www.agora.xyz/blogs/15-safe-wallet-improvements'],
+      ['Merged PR', 'agora-next#1567', 'https://github.com/voteagora/agora-next/pull/1567'],
+    ],
+  },
+  {
+    id: 'notifications',
+    label: 'Notification infrastructure',
+    title: 'Wallet-linked governance notifications across five channels.',
+    problem: 'Governance users needed event-specific alerts across email, Discord, Slack, Telegram, and browser push, without duplicate, unauthorized, or unverified delivery.',
+    decision: 'Centralize channel verification, wallet-linked preferences, event permissions, retries, deduplication, failure isolation, and delivery analytics.',
+    outcome: 'One reusable notification platform serving multiple governance products and tenant DAOs.',
+    stack: 'TypeScript · queues · multichannel delivery',
+    evidence: [
+      ['Product write-up', 'Notifications Hub', 'https://www.agora.xyz/blogs/9-notification-hub'],
+    ],
   },
   {
     id: 'authorization',
     label: 'Authorization',
-    title: 'Authorization owned by the server.',
+    title: 'Authorization decisions belong on the server.',
     problem: 'Forum actions trusted per-action client signatures and client-supplied authorization flags.',
     decision: 'Reuse SIWE JWT authentication and move ownership plus RBAC checks server-side.',
     outcome: 'Smaller clients and gated administrative APIs with one authorization boundary.',
     stack: 'SIWE · JWT · RBAC',
-    href: 'https://github.com/voteagora/agora-next/pull/1437',
-    evidence: 'agora-next#1437',
+    evidence: [
+      ['Merged PR', 'agora-next#1437', 'https://github.com/voteagora/agora-next/pull/1437'],
+    ],
   },
   {
     id: 'relay',
     label: 'Production debugging',
-    title: 'Sponsored delegations that failed onchain.',
+    title: 'A transaction hash was not success.',
     problem: 'Relayed delegateBySig transactions submitted successfully but reverted out of gas.',
     decision: 'Trace real receipts, replace fixed limits with estimate-based buffers, and verify completion.',
     outcome: 'The UI reports success only after the sponsored transaction actually succeeds.',
     stack: 'EIP-712 · gas relays · tracing',
-    href: 'https://github.com/voteagora/agora-next/pull/1514',
-    evidence: 'agora-next#1514',
-  },
-  {
-    id: 'publishing',
-    label: 'Recovery',
-    title: 'Publishing that survives restarts.',
-    problem: 'Contract publication hit PostgreSQL bind limits and died midway through long runs.',
-    decision: 'Batch writes, persist progress, and make every step idempotently resumable.',
-    outcome: 'Interrupted runs recover instead of starting over, with live progress in the UI.',
-    stack: 'PostgreSQL · batching · idempotency',
-    href: 'https://github.com/voteagora/op-atlas/pull/1441',
-    evidence: 'op-atlas#1441',
+    evidence: [
+      ['Merged PR', 'agora-next#1514', 'https://github.com/voteagora/agora-next/pull/1514'],
+    ],
   },
 ];
 
-export const morePublicWork = [
-  ['Optimism citizenship', 'https://github.com/voteagora/op-atlas/pull/1465'],
-  ['Go webhook security', 'https://github.com/superplanehq/superplane/pull/6702'],
-  ['Safe multisig', 'https://www.agora.xyz/blogs/15-safe-wallet-improvements'],
-  ['Notifications Hub', 'https://www.agora.xyz/blogs/9-notification-hub'],
+export const additionalEvidence = [
+  ['Merged PR', 'Optimism citizenship and Sybil resistance', 'https://github.com/voteagora/op-atlas/pull/1465'],
+  ['Merged PR', 'Resumable contract publishing', 'https://github.com/voteagora/op-atlas/pull/1441'],
+  ['Upstream PR · under review', 'Go webhook authentication', 'https://github.com/superplanehq/superplane/pull/6702'],
 ];
 
 export const agoraCase = {
@@ -141,7 +145,7 @@ export const takeaitProofs = [
     items: ['Zero-inbound, poll-only runners', 'Rotating hashed keys and per-secret IAM', 'Private VMs and per-agent Unix users', 'Temporary secret materialization and controlled egress'],
   },
   {
-    title: 'Durable operation',
+    title: 'Durable workflows',
     items: ['Atomic work claiming', 'Run journaling and replay', 'Crash recovery and host lifecycle management', 'Concurrency controls, reconciliation, and redacted logs'],
   },
   {
@@ -231,7 +235,7 @@ export const capabilities = [
     copy: 'Go, TypeScript, Python, PostgreSQL, Redis, queues, SSE, WebSockets, durable execution, idempotency.',
   },
   {
-    title: 'Product UI',
+    title: 'Product interfaces',
     copy: 'React, Next.js, Vue, wallet onboarding, real-time state, accessibility, i18n, responsive interfaces.',
   },
   {
@@ -242,22 +246,22 @@ export const capabilities = [
 
 export const resumes = [
   {
-    label: 'Primary track',
+    label: 'For Web3 product roles',
     title: 'Senior Web3 Product Engineer',
     copy: 'Contracts, indexed chain data, backend systems, wallet products, and production Web3 operations.',
     href: links.web3Resume,
     action: 'Download Web3 résumé',
   },
   {
-    label: 'Secondary specialization',
-    title: 'AI Agent Platforms',
+    label: 'For AI-agent platform roles',
+    title: 'Senior Software Engineer — AI Agent Platforms',
     copy: 'Secure and durable agent execution, Go runners, GCP provisioning, and human supervision.',
     href: links.aiResume,
     action: 'Download AI/platform résumé',
   },
   {
-    label: 'Broader software roles',
-    title: 'Backend & Product Systems',
+    label: 'For backend and full-stack roles',
+    title: 'Senior Software Engineer — Backend & Product Systems',
     copy: 'Go and TypeScript services, real-time workflows, cloud operations, and full-stack product ownership.',
     href: links.softwareResume,
     action: 'Download general résumé',
