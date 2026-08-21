@@ -154,13 +154,98 @@ export const takeaitProofs = [
   },
 ];
 
+export const takeaitLifecycle = [
+  {
+    label: 'Unit of work',
+    copy: 'A ticket keeps dependencies, comments, and ordered verb assignments—plan, investigate, code, review, or respond—in one durable record.',
+  },
+  {
+    label: 'Claim',
+    copy: 'The daemon atomically claims the next eligible assignment and acquires a host-wide flock slot that the kernel releases if the process dies.',
+  },
+  {
+    label: 'Run',
+    copy: 'An isolated workspace receives pinned profile and execution settings while ticket comments and human directives remain live throughout the turn.',
+  },
+  {
+    label: 'Finish',
+    copy: 'A runner-owned repository check must pass before final inspection, pull-request creation, and recorded execution provenance.',
+  },
+];
+
 export const takeaitCase = {
-  problem: 'Coding agents need isolation, auditability, and human control when they work against production repositories.',
-  ownership: 'The platform end to end: Next.js/PostgreSQL control plane, GCP provisioning layer, and multi-daemon Go runner runtime.',
-  constraints: 'No inbound runner path, no secrets at rest on execution hosts, crash-safe recovery, and in-flight human redirection.',
-  architecture: 'Poll-only Go runners on private GCP VMs use rotating keys, per-agent Unix users, atomic work claiming, journal/replay recovery, and automated pull-request creation.',
-  decisions: 'Choose polling over push, verb-based atomic claiming over optimistic ownership, and journaled replay over stateless retries.',
-  outcome: 'Claude Code and Codex agents ship reviewed pull requests through a durable workflow with explicit human control.',
+  eyebrow: 'Agents that finish the ticket',
+  title: 'The model writes the diff. TakeAIt makes the work durable.',
+  intro: [
+    'A useful diff is not a completed ticket. Real engineering work accumulates dependencies, comments, decisions, restarts, validation, and review.',
+    'TakeAIt keeps that lifecycle in one shared record while tai-agent turns each claimable assignment into a contained, recoverable run.',
+  ],
+  chapters: [
+    {
+      number: '01',
+      title: 'The ticket outlives the model turn.',
+      copy: [
+        'Humans and agents share tickets, threaded comments, dependencies, and assignments. Each assignment pairs a user with a verb such as plan, investigate, code, review, or respond.',
+        'Assignments are ordered, so dependency state and earlier work determine what can be claimed next. The resulting run, discussion, outcome, and pull request remain attached to the same ticket.',
+      ],
+    },
+    {
+      number: '02',
+      title: 'Claiming and preparation are explicit.',
+      copy: [
+        'The Go daemon first acquires a host-wide execution slot through a nonblocking flock lease, then atomically claims the next eligible assignment. If the daemon dies, the kernel releases the slot without a separate cleanup service.',
+        'The runner creates an isolated workspace, clones the required repositories, snapshots the owner-controlled settings and skills, resolves the harness and model profile, and records those inputs with the run before execution begins.',
+      ],
+    },
+    {
+      number: '03',
+      title: 'Execution stays connected to the ticket.',
+      copy: [
+        'The runner streams engine events while following the ticket change feed. New comments queue as context for the next turn; pause, stop, abort, restart, and redirect directives can interrupt active work.',
+        'When an agent needs a decision, it posts a structured question and parks the run. The answer is journaled into the next turn even if the daemon restarts while waiting.',
+      ],
+    },
+    {
+      number: '04',
+      title: 'Completion is a runner decision.',
+      copy: [
+        'A repository can define a runner-owned completion command in .tai/WORKFLOW.md. The runner reads and pins that policy before the first model turn, so an agent cannot weaken its own gate by editing the checkout.',
+        'A failed check returns bounded, redacted diagnostics to the same session. Retry state survives restarts, and the runner inspects the repository again after a passing check before it accepts completion or opens a pull request.',
+      ],
+    },
+    {
+      number: '05',
+      title: 'Different failures have different meanings.',
+      copy: [
+        'An engine exit, silent initialization, stalled progress, and an overlong tool call are tracked separately. SIGHUP reloads credentials, SIGTERM stops new claims and drains at a safe boundary, and SIGINT interrupts active work with an explicit operator outcome.',
+        'Recovery runs before any new work is claimed. It reconciles the server row, assignment, workspace, engine session, heartbeat, and append-only journal to resume locally, take over a stale instance, continue a parked question, recreate safe early work, or begin a bounded fresh attempt.',
+      ],
+    },
+    {
+      number: '06',
+      title: 'Execution is reproducible and contained.',
+      copy: [
+        'Owner-controlled profile repositories carry settings, skills, and hooks. Profiles are staged, checked for escaping symlinks, dangerous hooks, network-bound MCP servers, and credential-shaped environment variables, then atomically published and snapshotted per run.',
+        'Production runners use private GCE VMs, separate Unix users, systemd and memory isolation, restricted egress, and a blocked metadata endpoint. Secret Manager credentials are materialized into per-agent tmpfs paths and redacted from recorded events.',
+      ],
+    },
+    {
+      number: '07',
+      title: 'Humans remain accountable for the result.',
+      copy: [
+        'Review runs return structured findings. A follow-up code assignment cannot complete until every finding is fixed or rebutted with a recorded reason; the runner enforces coverage while a human decides whether the result is acceptable.',
+        'Every run exposes its engine, model, execution profile, profile revision, runner version, source branch, activity, failures, and pull request. “The agent did it” is not treated as an audit trail.',
+      ],
+    },
+    {
+      number: '08',
+      title: 'Agents can share the real backlog.',
+      copy: [
+        'TakeAIt now runs part of Agora’s internal engineering workflow. Agents draw from the same queue as humans without someone babysitting a terminal or runner VM, while every handoff remains interruptible and review-gated.',
+        'In its first three months, the Go runner and supporting services grew to roughly 33,000 lines of non-test code, 25,000 lines of tests, and 164 commits.',
+      ],
+    },
+  ],
 };
 
 export const migrationProofs = [
