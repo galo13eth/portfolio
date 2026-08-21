@@ -55,8 +55,13 @@
   <section class="s-code" data-formation="0" data-accent="#93a8e8">
     <p class="eyebrow">Public code · 90 merged PRs</p>
     <h2>Selected public engineering</h2>
-    <p>Merged production work in Agora's public repositories — every link goes to the reviewed pull request.</p>
+    <p>Original systems and merged production work — every link opens the code, review, or live result.</p>
     <ul class="work prs">
+      <li>
+        <strong>Snapshot-and-claim migration across EVM chains.</strong>
+        Built a deterministic Rust snapshot pipeline, narrowly scoped Solidity claim contracts, and a React verification app for ERC-721/1155 state migration — with explicit trust assumptions and a public Sepolia → Base Sepolia canary.
+        <span class="pr-meta">Rust · Solidity · Foundry · React · Merkle proofs · <a href="https://github.com/galo13eth/evm-migration-lab">Repository</a> · <a href="https://web-production-fab71.up.railway.app">Live app</a> · <a href="https://github.com/galo13eth/evm-migration-lab/releases/tag/v0.1.0">v0.1.0</a></span>
+      </li>
       <li>
         <strong>Embedded wallets without breaking existing Web3 flows.</strong>
         One tenant needed email and social login with embedded wallets; every other tenant relied on ConnectKit, Safe, and gasless EIP-712 voting. Shipped Privy as a wagmi connector behind a per-tenant flag — no existing wallet flow changed.
